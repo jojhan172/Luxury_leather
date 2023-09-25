@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;700&family=Roboto:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+                --white: #FFFFFF;
+                --bkack: #000000;
+                --very-light-grey: #c7c7c7;
+                --text-input-field: #F7F7F7;
+                --hospital-green: #ACD9B2;
+                
+                --sm: 1.4rem;
+                --md: 1.5rem;
+                --lg: 1.8rem;
+            }
+        * {
+            box-sizing: border-box;
+            padding: 0px;
+            margin: 0px;
+        }
+        html {
+            font-size: 62.5%;
+        }
+        body{
+            font-family: 'Quicksand', sans-serif;
+        }
+        .product-detail {
+            display: flex;
+            position: relative;
+            justify-items: center;
+            flex-direction: column;
+            border-radius: 10px;
+            background-color: var(--text-input-field);
+            width: 38vw;
+            padding: 0;
+            height: 80vh;
+        }
+
+        .product-detail__close {
+            display: flex;
+            position: absolute;
+            width: 35px;
+            height: 35px;
+            background-color: var(--text-input-field);
+            padding: 6px;
+            border: 1px solid var(--very-light-grey);
+            border-radius: 50%;
+            justify-content: center;
+            align-content: center;
+            top: 5px;
+            left: 5px;
+        }
+
+        .product-detail__close img {
+            width: 50%;
+            height: 50%;
+            align-self: center;
+            justify-self: center;
+        }
+
+        .product-detail__close:hover {
+            cursor: pointer;
+        }
+
+
+
+        .product-detail > img {
+            border-radius: 10px;
+            width: 100%;
+            height: 60%;
+            object-fit: cover;
+        }
+
+        .points {
+            display: flex;
+            justify-content: center;
+
+        }
+
+        .points > div {
+            border-radius: 50% ;
+            width: 6px;
+            height: 6px;
+            margin-top: 8px;
+            margin-left: 5px;
+            background-color: var(--very-light-grey);
+        }
+
+        .points > div:nth-child(2) {
+            background-color: var(--hospital-green);
+        }
+
+        .product-detail__info {
+            display: flex;
+            flex-direction: column;
+            justify-items: center;
+            width: 100%;
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+
+        .product-detail__info p:nth-child(1), p:nth-child(2) {
+            font-size: var(--md);
+            font-weight: bold;
+        }
+        .product-detail p:nth-child(3) {
+            margin-top: 10px;
+            margin-bottom: 20px;
+            font-size: var(--sm);
+        }
+
+        .primary-button {
+            display: flex;
+            position: absolute;
+            right: 10%;
+            bottom: 16px;
+            padding: 4px;
+            justify-content: center;
+            align-items: center;
+            gap: 3%;
+            width: 80%;
+            border: 0px solid;
+            border-radius: 10px;
+            background-color: var(--hospital-green);
+            color: white;
+        }
+
+        .primary-button:hover {
+            cursor:pointer
+        }
+
+    </style>
+</head>
+<body>
+    <aside class="product-detail">
+        <div class="product-detail__close">
+            <img src="./assets/icons/icon_close.png" alt="">
+        </div>
+        <img class="product-detail__img" src="https://images.pexels.com/photos/1383834/pexels-photo-1383834.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="">
+        <div class="points">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="product-detail__info">
+            <p>$ 120,00</p>
+            <p>Nissan Skyline GTR R34</p>
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ex suscipit cupiditate similique temporibus quo voluptas excepturi atque reiciendis magni nesciunt porro mollitia, laborum assumenda dignissimos commodi consequuntur reprehenderit! Excepturi, cupiditate?</p>
+        </div>
+        <button class="primary-button">
+            <img src="./assets/icons/bt_add_to_cart.svg" alt="">
+            <p>Add to Cart</p>
+        </button>
+    </aside>
+</body>
+</html>

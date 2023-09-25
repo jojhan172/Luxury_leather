@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;700&family=Roboto:wght@700&display=swap" rel="stylesheet">
+    <title>Create account</title>
+    <style>
+        :root {
+            --white: #FFFFFF;
+            --black: #000000;
+            --very-light-grey: #c7c7c7;
+            --background-very-light-grey: #f8f8f8;
+            --text-input-field: #F7F7F7;
+            --hospital-green: #ACD9B2;
+            
+            --sm: 1.3rem;
+            --md: 1.5rem;
+            --lg: 1.8rem;
+        }
+        * {
+            box-sizing: border-box;
+            padding: 0px;
+            margin: 0px;
+        }
+        html {
+            font-size: 62.5%;
+        }
+        body{
+            font-family: 'Quicksand', sans-serif;
+            display: grid;
+            grid-template-rows: 20% 55% 25%;
+            height: 100vh;
+        }
+        .create-account-box {
+            grid-column: 1/1;
+            grid-row: 1/2;
+
+            display: flex;
+            flex-direction: column;
+
+            top: 5%;
+            padding-left: 3%;
+            height: 95%;
+            width: 100%;   
+        }
+        .tittle {
+            margin-top: 8%;
+            margin-bottom: 40px;
+
+            font-size: var(--lg);
+            text-align: left;
+            
+            font-family: 'Quicksand' ;
+            font-weight: 700;
+        }
+        .main-box__create-account-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: var(--md);
+            font-weight: 700;
+            margin-bottom: 4px
+        }
+        input {
+            background-color: var(--text-input-field);
+            border: none;
+            border-radius: 8px;
+            font-size: var(--md);
+            height: 40px;
+            padding: 6px;
+            margin-bottom: 20px;
+        }
+
+        .create-account-form__save-button {
+            position: absolute;
+            bottom: 0px;
+            border: solid 0px;
+            border-radius: 8px;
+            color: var(--white);
+            height: 50px;
+            width: 94%;
+            font-size: var(--lg);
+            font-weight: 500;
+
+            background-color: var(--hospital-green);
+        }
+
+        @media (min-width: 760px) {
+            body {
+                grid-template-columns:37.5% 25% 37.5%;
+            }
+
+            .create-account-box {
+                grid-column: 2/3;
+                grid-row: 2/3; 
+                padding: 0;
+                top: 50%;
+                width: 100%;   
+                height: 85%;
+            }
+
+            .create-account-form__save-button {
+                bottom: 15%;
+                width: 25%;
+                height: 40px;
+                cursor: pointer;
+            } 
+        }
+    </style>
+</head>
+<body>
+    <section class="create-account-box">
+        <h1 class="tittle create-account-box__tittle">New account</h1>
+        <form action="/" class="create-account-form main-box__create-account-form">
+            <label for="name-box" class="name-label create-account-form__name-label">Name</label>
+            <input type="text" id="name-box" placeholder="Camila Yokoo" class="name-input create-account-form__name-input" >
+
+            <label for="email-box" class="email-label create-account-form__email-label">Email addres</label>
+            <input type="email" id="email-box" placeholder="camilayokoo@email.com" class="email-input create-account-form__email-input" >
+
+            <label for="password-box" class="password-label create-account-form__password-label">Password</label>
+            <input type="password" id="password-box" placeholder="***********" class="password-input create-account-form__password-input">
+
+            <input type="submit" value="Create account" class="create-account-form__save-button" >
+        </form>
+    </section>
+</body>
+</html>

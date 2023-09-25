@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;700&family=Roboto:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --white: #FFFFFF;
+            --black: #000000;
+            --very-light-grey: #c7c7c7;
+            --background-very-light-grey: #f8f8f8;
+            --text-input-field: #F7F7F7;
+            --hospital-green: #ACD9B2;
+            
+            --sm: 1.3rem;
+            --md: 1.5rem;
+            --lg: 1.8rem;
+        }
+        * {
+            box-sizing: border-box;
+            padding: 0px;
+            margin: 0px;
+        }
+        html {
+            font-size: 62.5%;
+        }
+
+        body{
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .cards-box {
+            gap: 20px;
+
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 140px);
+            
+            place-content: center;
+            
+        }
+
+        .product-card {
+            width: 140px;
+        }
+
+        .product-card img{
+            width: 140px;
+            height: 140px;
+            border-radius: 20px;
+
+            object-fit: cover;
+        }
+        
+        .product-info {
+            display: flex;
+            margin-top: 8px;
+            
+            justify-content: space-between;
+        }
+
+        .product-info div p:nth-child(1) {
+            color: var(--black);
+            font-weight: bold;
+            font-size: var(--md);
+        }
+        .product-info div p:nth-child(2) {
+            margin-bottom: 0;
+            margin-top: 0;
+            
+            color: var(--very-light-grey);
+            font-size: var(--sm);
+            
+        }
+
+        .product-info figure {
+            margin: 0;
+        }
+        .product-info figure img {
+            width: 35px;
+            height: 35px;
+        }
+
+        @media (min-width: 760px) {
+            .cards-box {
+                grid-template-columns: repeat(auto-fill, 240px);
+            }
+
+            .product-card {
+                width: 240px;
+            }
+
+            .product-card img {
+                width: 240px;
+                height: 240px;
+            }
+        }
+      
+    </style>
+</head>
+<body>
+    <section class="main_container">
+        <div class="cards-box">
+            <div class="product-card cards-box__product-card" id="">
+                <img src="https://images.pexels.com/photos/1383834/pexels-photo-1383834.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" class="product-img">
+                <div class="product-info">
+                    <div>
+                        <p>$ 120,00</p>
+                        <p>Nissan GTR R34</p>
+                    </div>
+                    <figure>
+                        <img src="./assets/icons/bt_add_to_cart.svg" alt="">
+                    </figure>
+                </div>
+            </div>
+            <div class="product-card cards-box__product-card" id="">
+                <img src="https://images.pexels.com/photos/1383834/pexels-photo-1383834.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" class="product-img">
+                <div class="product-info">
+                    <div>
+                        <p>$ 120,00</p>
+                        <p>Nissan GTR R34</p>
+                    </div>
+                    <figure>
+                        <img src="./assets/icons/bt_add_to_cart.svg" alt="">
+                    </figure>
+                </div>
+            </div>
+            <div class="product-card cards-box__product-card" id="">
+                <img src="https://images.pexels.com/photos/1383834/pexels-photo-1383834.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" class="product-img">
+                <div class="product-info">
+                    <div>
+                        <p>$ 120,00</p>
+                        <p>Nissan GTR R34</p>
+                    </div>
+                    <figure>
+                        <img src="./assets/icons/bt_add_to_cart.svg" alt="">
+                    </figure>
+                </div>
+            </div>
+            <div class="product-card cards-box__product-card" id="">
+                <img src="https://images.pexels.com/photos/1383834/pexels-photo-1383834.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" class="product-img">
+                <div class="product-info">
+                    <div>
+                        <p>$ 120,00</p>
+                        <p>Nissan GTR R34</p>
+                    </div>
+                    <figure>
+                        <img src="./assets/icons/bt_add_to_cart.svg" alt="">
+                    </figure>
+                </div>
+            </div>
+            <div class="product-card cards-box__product-card" id="">
+                <img src="https://images.pexels.com/photos/1383834/pexels-photo-1383834.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" class="product-img">
+                <div class="product-info">
+                    <div>
+                        <p>$ 120,00</p>
+                        <p>Nissan GTR R34</p>
+                    </div>
+                    <figure>
+                        <img src="./assets/icons/bt_add_to_cart.svg" alt="">
+                    </figure>
+                </div>
+            </div>
+            <div class="product-card cards-box__product-card" id="">
+                <img src="https://images.pexels.com/photos/1383834/pexels-photo-1383834.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" class="product-img">
+                <div class="product-info">
+                    <div>
+                        <p>$ 120,00</p>
+                        <p>Nissan GTR R34</p>
+                    </div>
+                    <figure>
+                        <img src="./assets/icons/bt_add_to_cart.svg" alt="">
+                    </figure>
+                </div>
+            </div>
+            <div class="product-card cards-box__product-card" id="">
+                <img src="https://images.pexels.com/photos/1383834/pexels-photo-1383834.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" class="product-img">
+                <div class="product-info">
+                    <div>
+                        <p>$ 120,00</p>
+                        <p>Nissan GTR R34</p>
+                    </div>
+                    <figure>
+                        <img src="./assets/icons/bt_add_to_cart.svg" alt="">
+                    </figure>
+                </div>
+            </div>
+            <div class="product-card cards-box__product-card" id="">
+                <img src="https://images.pexels.com/photos/1383834/pexels-photo-1383834.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" class="product-img">
+                <div class="product-info">
+                    <div>
+                        <p>$ 120,00</p>
+                        <p>Nissan GTR R34</p>
+                    </div>
+                    <figure>
+                        <img src="./assets/icons/bt_add_to_cart.svg" alt="">
+                    </figure>
+                </div>
+            </div>
+            <div class="product-card cards-box__product-card" id="">
+                <img src="https://images.pexels.com/photos/1383834/pexels-photo-1383834.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" class="product-img">
+                <div class="product-info">
+                    <div>
+                        <p>$ 120,00</p>
+                        <p>Nissan GTR R34</p>
+                    </div>
+                    <figure>
+                        <img src="./assets/icons/bt_add_to_cart.svg" alt="">
+                    </figure>
+                </div>
+            </div>
+            <div class="product-card cards-box__product-card" id="">
+                <img src="https://images.pexels.com/photos/1383834/pexels-photo-1383834.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" class="product-img">
+                <div class="product-info">
+                    <div>
+                        <p>$ 120,00</p>
+                        <p>Nissan GTR R34</p>
+                    </div>
+                    <figure>
+                        <img src="./assets/icons/bt_add_to_cart.svg" alt="">
+                    </figure>
+                </div>
+            </div>
+            <div class="product-card cards-box__product-card" id="">
+                <img src="https://images.pexels.com/photos/1383834/pexels-photo-1383834.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" class="product-img">
+                <div class="product-info">
+                    <div>
+                        <p>$ 120,00</p>
+                        <p>Nissan GTR R34</p>
+                    </div>
+                    <figure>
+                        <img src="./assets/icons/bt_add_to_cart.svg" alt="">
+                    </figure>
+                </div>
+            </div>
+            <div class="product-card cards-box__product-card" id="">
+                <img src="https://images.pexels.com/photos/1383834/pexels-photo-1383834.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" class="product-img">
+                <div class="product-info">
+                    <div>
+                        <p>$ 120,00</p>
+                        <p>Nissan GTR R34</p>
+                    </div>
+                    <figure>
+                        <img src="./assets/icons/bt_add_to_cart.svg" alt="">
+                    </figure>
+                </div>
+            </div>
+            <div class="product-card cards-box__product-card" id="">
+                <img src="https://images.pexels.com/photos/1383834/pexels-photo-1383834.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" class="product-img">
+                <div class="product-info">
+                    <div>
+                        <p>$ 120,00</p>
+                        <p>Nissan GTR R34</p>
+                    </div>
+                    <figure>
+                        <img src="./assets/icons/bt_add_to_cart.svg" alt="">
+                    </figure>
+                </div>
+            </div>
+            <div class="product-card cards-box__product-card" id="">
+                <img src="https://images.pexels.com/photos/1383834/pexels-photo-1383834.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" class="product-img">
+                <div class="product-info">
+                    <div>
+                        <p>$ 120,00</p>
+                        <p>Nissan GTR R34</p>
+                    </div>
+                    <figure>
+                        <img src="./assets/icons/bt_add_to_cart.svg" alt="">
+                    </figure>
+                </div>
+            </div>
+            <div class="product-card cards-box__product-card" id="">
+                <img src="https://images.pexels.com/photos/1383834/pexels-photo-1383834.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" class="product-img">
+                <div class="product-info">
+                    <div>
+                        <p>$ 120,00</p>
+                        <p>Nissan GTR R34</p>
+                    </div>
+                    <figure>
+                        <img src="./assets/icons/bt_add_to_cart.svg" alt="">
+                    </figure>
+                </div>
+            </div>
+            <div class="product-card cards-box__product-card" id="">
+                <img src="https://images.pexels.com/photos/1383834/pexels-photo-1383834.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" class="product-img">
+                <div class="product-info">
+                    <div>
+                        <p>$ 120,00</p>
+                        <p>Nissan GTR R34</p>
+                    </div>
+                    <figure>
+                        <img src="./assets/icons/bt_add_to_cart.svg" alt="">
+                    </figure>
+                </div>
+            </div>
+            <div class="product-card cards-box__product-card" id="">
+                <img src="https://images.pexels.com/photos/1383834/pexels-photo-1383834.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" class="product-img">
+                <div class="product-info">
+                    <div>
+                        <p>$ 120,00</p>
+                        <p>Nissan GTR R34</p>
+                    </div>
+                    <figure>
+                        <img src="./assets/icons/bt_add_to_cart.svg" alt="">
+                    </figure>
+                </div>
+            </div>
+            <div class="product-card cards-box__product-card" id="">
+                <img src="https://images.pexels.com/photos/1383834/pexels-photo-1383834.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" class="product-img">
+                <div class="product-info">
+                    <div>
+                        <p>$ 120,00</p>
+                        <p>Nissan GTR R34</p>
+                    </div>
+                    <figure>
+                        <img src="./assets/icons/bt_add_to_cart.svg" alt="">
+                    </figure>
+                </div>
+            </div>
+            <div class="product-card cards-box__product-card" id="">
+                <img src="https://images.pexels.com/photos/1383834/pexels-photo-1383834.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" class="product-img">
+                <div class="product-info">
+                    <div>
+                        <p>$ 120,00</p>
+                        <p>Nissan GTR R34</p>
+                    </div>
+                    <figure>
+                        <img src="./assets/icons/bt_add_to_cart.svg" alt="">
+                    </figure>
+                </div>
+            </div>
+            <div class="product-card cards-box__product-card" id="">
+                <img src="https://images.pexels.com/photos/1383834/pexels-photo-1383834.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" class="product-img">
+                <div class="product-info">
+                    <div>
+                        <p>$ 120,00</p>
+                        <p>Nissan GTR R34</p>
+                    </div>
+                    <figure>
+                        <img src="./assets/icons/bt_add_to_cart.svg" alt="">
+                    </figure>
+                </div>
+            </div>
+            <div class="product-card cards-box__product-card" id="">
+                <img src="https://images.pexels.com/photos/1383834/pexels-photo-1383834.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" class="product-img">
+                <div class="product-info">
+                    <div>
+                        <p>$ 120,00</p>
+                        <p>Nissan GTR R34</p>
+                    </div>
+                    <figure>
+                        <img src="./assets/icons/bt_add_to_cart.svg" alt="">
+                    </figure>
+                </div>
+            </div>
+            <div class="product-card cards-box__product-card" id="">
+                <img src="https://images.pexels.com/photos/1383834/pexels-photo-1383834.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" class="product-img">
+                <div class="product-info">
+                    <div>
+                        <p>$ 120,00</p>
+                        <p>Nissan GTR R34</p>
+                    </div>
+                    <figure>
+                        <img src="./assets/icons/bt_add_to_cart.svg" alt="">
+                    </figure>
+                </div>
+            </div>
+            <div class="product-card cards-box__product-card" id="">
+                <img src="https://images.pexels.com/photos/1383834/pexels-photo-1383834.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" class="product-img">
+                <div class="product-info">
+                    <div>
+                        <p>$ 120,00</p>
+                        <p>Nissan GTR R34</p>
+                    </div>
+                    <figure>
+                        <img src="./assets/icons/bt_add_to_cart.svg" alt="">
+                    </figure>
+                </div>
+            </div>
+            <div class="product-card cards-box__product-card" id="">
+                <img src="https://images.pexels.com/photos/1383834/pexels-photo-1383834.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" class="product-img">
+                <div class="product-info">
+                    <div>
+                        <p>$ 120,00</p>
+                        <p>Nissan GTR R34</p>
+                    </div>
+                    <figure>
+                        <img src="./assets/icons/bt_add_to_cart.svg" alt="">
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
