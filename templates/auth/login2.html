@@ -1,46 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>login</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;700&family=Roboto:wght@700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --white: #FFFFFF;
-            --black: #000000;
-            --very-light-grey: #c7c7c7;
-            --background-very-light-grey: #f8f8f8;
-            --text-input-field: #F7F7F7;
-            --hospital-green: #ACD9B2;
-            
-            --sm: 1.3rem;
-            --md: 1.5rem;
-            --lg: 1.8rem;
-        }
-        * {
-            box-sizing: border-box;
-            padding: 0px;
-            margin: 0px;
-        }
-        html {
-            font-size: 62.5%;
-        }
-        body{
-            font-family: 'Quicksand', sans-serif;
-            display: grid;
-            grid-template-rows: 20% 55% 25%;
-            grid-template-columns: 5% 90% 5%;
-            height: 100vh;
-            place-content: center;
-        }
+{% extends './base.html' %}
+    {% block title %}Login{% endblock %}
 
+{% block customCSS %}
+    <style>
         .main-box {
-            grid-column: 2/3;
-            grid-row: 2/3;
 
             display: flex;
             position: absolute;
@@ -107,7 +70,7 @@
 
             display: flex;
             justify-content: center;
-    
+
         }
 
         .signup-box button {
@@ -132,6 +95,7 @@
         @media (min-width: 760px) {
 
             .main-box {
+            margin-left:37% ;
             top: 25%;
             width: 26%;   
             }
@@ -145,26 +109,21 @@
             }
         }
     </style>
-</head>
-<body>
+{% endblock %}
+
+{% block body %}
     <section class="main-box">
-        <img src="/assets/logo/logo_bota_fora.svg" alt="logo" class="main-box__img">
-        <form action="/" class="login-form main-box__login-form">
+        <img src="../../static/logo/logo_bota_fora.svg" alt="logo" class="main-box__img">
+        <form action="/login" method="POST" class="login-form main-box__login-form">
             <label for="email-box" class="email-label login-form__email-label">Email addres</label>
-            <input type="email" id="email-box" placeholder="botafora@email.com" class="email-input login-form__email-input" >
+            <input type="email" id="email-box" name="email" placeholder="botafora@email.com" class="email-input login-form__email-input" >
 
             <label for="password-box" class="password-label login-form__password-label">Password</label>
-            <input type="password" id="password-box" placeholder="***********" class="password-input login-form__password-input">
+            <input type="password" id="password-box" name="password" placeholder="***********" class="password-input login-form__password-input">
+            
+            <button type="submit" value="Log in" class="login-form__login-button"></button>
 
-            <input type="submit" value="Log in" class="login-form__login-button">
         </form>
         <p class="main-box__forgot">Forgot my password</p>
     </section>
-    <section class="signup-box">
-        <button id="signup-buttton">
-            <a href="/">Sign up</a>
-        </button>
-    </section>
-    
-</body>
-</html>
+{% endblock %}
