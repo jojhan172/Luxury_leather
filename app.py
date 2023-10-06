@@ -16,6 +16,14 @@ db = MySQL(app)
 def index():
     return redirect(url_for('login'))
 
+@app.route('/home')
+def home():
+    return render_template('auth/home1.html')
+
+@app.route('/navbar')
+def navbar():
+    return render_template('auth/navbar.html')
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -38,9 +46,7 @@ def login():
     else:
         return render_template('auth/login2.html')
 
-@app.route('/home')
-def home():
-    return render_template('home.html')
+
 
 if __name__ == '__main__':
     app.config.from_object(config['development'])
