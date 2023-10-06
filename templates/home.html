@@ -6,6 +6,8 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Bienvenido</h1>
+<!--current_user.property -> para usar las propiedades que declaramos en el archivo User.py-->
+    <h1>Bienvenido, {{ current_user.username }}</h1> 
+    <a href="{{ url_for('logout') }}">Logout</a>
 
 {% endblock %}
