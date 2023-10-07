@@ -12,3 +12,5 @@ class User(UserMixin):
         self.city = city
         self.phone = phone
 
+
+

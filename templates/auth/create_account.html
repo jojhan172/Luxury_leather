@@ -78,6 +78,22 @@
         }
 
         .create-account-form__save-button {
+            padding: 10px;
+            width: 100%;
+            height: 50px;
+            margin-top: 35px;
+            margin-bottom: 16px;
+            align-self: center;
+
+            background-color: var(--hospital-green);
+            color: var(--white);
+            font-size: var(--md);
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .create-account-form__save-button {
             position: absolute;
             bottom: 0px;
             border: solid 0px;
@@ -106,6 +122,7 @@
             }
 
             .create-account-form__save-button {
+                font-weight: 700;
                 bottom: 15%;
                 width: 25%;
                 height: 40px;
@@ -117,17 +134,20 @@
 <body>
     <section class="create-account-box">
         <h1 class="tittle create-account-box__tittle">New account</h1>
-        <form action="/" class="create-account-form main-box__create-account-form">
+        <form action="/create_account" method="POST" class="create-account-form main-box__create-account-form">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            
             <label for="name-box" class="name-label create-account-form__name-label">Name</label>
-            <input type="text" id="name-box" placeholder="Camila Yokoo" class="name-input create-account-form__name-input" >
+            <input type="text" id="name-box" placeholder="Camila Yokoo" class="name-input create-account-form__name-input" name="fullname">
 
             <label for="email-box" class="email-label create-account-form__email-label">Email addres</label>
-            <input type="email" id="email-box" placeholder="camilayokoo@email.com" class="email-input create-account-form__email-input" >
+            <input type="email" id="email-box" placeholder="camilayokoo@email.com" class="email-input create-account-form__email-input" name="email" >
 
             <label for="password-box" class="password-label create-account-form__password-label">Password</label>
-            <input type="password" id="password-box" placeholder="***********" class="password-input create-account-form__password-input">
+            <input type="password" id="password-box" placeholder="***********" class="password-input create-account-form__password-input" name="password">
+            
+            <button type="submit" value="Log in" class="create-account-form__save-button">Create account</button>
 
-            <input type="submit" value="Create account" class="create-account-form__save-button" >
         </form>
     </section>
 </body>

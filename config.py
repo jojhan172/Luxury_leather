@@ -7,6 +7,7 @@ class DevelopmentConfig(Config):
     MYSQL_USER = 'root'
     MYSQL_PASSWORD = '123456'
     MYSQL_DB = 'luxury_leather' 
+
 config={
     'development':DevelopmentConfig
 }

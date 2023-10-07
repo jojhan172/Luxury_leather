@@ -3,6 +3,8 @@ from flask_mysqldb import MySQL
 from flask_login import LoginManager, login_user, logout_user, login_required
 from flask_wtf.csrf import CSRFProtect
 
+import mysql.connector
+
 from config import config
 
 # Models
@@ -14,7 +16,12 @@ from models.entities.User import User
 app = Flask(__name__)
 
 csrf = CSRFProtect()
-db = MySQL(app)
+db = mysql.connector.connect(
+    host = 'localhost',
+    user = 'root',
+    password = '123456',
+    database = 'luxury_leather' 
+)
 login_manager_app = LoginManager(app) 
 
 @login_manager_app.user_loader
@@ -29,9 +36,23 @@ def index():
 def home():
     return render_template('home.html')
 
-@app.route('/register')
+@app.route('/create_account', methods=['GET', 'POST'])
 def register():
-    return render_template('auth/create_account.html')
+    if request.method == 'POST':
+        newUser = User(0, request.form['email'], request.form['password'], request.form['fullname'])
+        verifier = ModelUser.VerifyRegister(db, newUser) # Verifica si el usuario ya esta en base de datos
+        
+        if verifier == True:
+            print("Este correo ya esta en uso")
+            flash("Este correo ya esta en uso")
+            return render_template('auth/create_account.html')
+        else: 
+            ModelUser.addToDataBase(db, newUser)
+            print("Usuario registrado correctamente")
+            flash("Usuario registrado correctamente")
+            return render_template('auth/create_account.html')
+    else:
+        return render_template('auth/create_account.html')
 
 @app.route('/navbar')
 def navbar():
@@ -42,7 +63,7 @@ def login():
     if request.method == 'POST':
         #print(request.form['email'])
         #print(request.form['password'])
-        user = User(1, request.form['email'], request.form['password'])
+        user = User(0, request.form['email'], request.form['password'])
         print(user)
         logged_user = ModelUser.login(db, user)
         print(logged_user)
