@@ -36,7 +36,7 @@ def index():
 def home():
     return render_template('home.html')
 
-@app.route('/create_account', methods=['GET', 'POST'])
+@app.route('/create_account_client', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         newUser = User(0, request.form['email'], request.form['password'], request.form['fullname'])
@@ -44,7 +44,7 @@ def register():
         
         if verifier == True:
             print("Este correo ya esta en uso")
-            flash("Este correo ya esta en uso")
+            flash("Este correo ya está en uso")
             return render_template('auth/create_account.html')
         else: 
             ModelUser.addToDataBase(db, newUser)
@@ -57,6 +57,10 @@ def register():
 @app.route('/navbar')
 def navbar():
     return render_template('auth/navbar.html')
+
+@app.route('/user_select')
+def user_select():
+    return render_template('auth/login_select.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

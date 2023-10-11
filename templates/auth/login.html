@@ -63,6 +63,7 @@
             color: var(--white);
             font-size: var(--md);
             font-weight: bold;
+            border-radius: 1em;
 
             cursor: pointer;
         }
@@ -135,10 +136,10 @@
         <form action="/login" method="POST" class="login-form main-box__login-form">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <label for="email-box" class="email-label login-form__email-label">Email addres</label>
-            <input type="email" id="email-box" name="email" placeholder="botafora@email.com" class="email-input login-form__email-input" >
+            <input type="email" id="email-box" name="email" placeholder="botafora@email.com" class="email-input login-form__email-input" required>
 
             <label for="password-box" class="password-label login-form__password-label">Password</label>
-            <input type="password" id="password-box" name="password" placeholder="***********" class="password-input login-form__password-input">
+            <input type="password" id="password-box" name="password" placeholder="***********" class="password-input login-form__password-input" required>
             
             <button type="submit" value="Log in" class="login-form__login-button">Log in</button>
         </form>
@@ -146,7 +147,7 @@
     </section>
     <section class="signup-box">
         <button id="signup-buttton">
-            <a href="/create_account">Sign up</a>
+            <a href="/user_select">Sign up</a>
         </button>
     </section>
 {% endblock %}

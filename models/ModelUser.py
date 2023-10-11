@@ -55,7 +55,7 @@ class ModelUser():
     @classmethod
     def get_by_id(self, db, id):
         try:
-            cursor = db.connection.cursor()
+            cursor = db.cursor()
             sql = "SELECT id, email, password, fullname, username, postal_code, adress, city, phone FROM client_users WHERE id = '{}'".format(id)
             cursor.execute(sql)
             row = cursor.fetchone()

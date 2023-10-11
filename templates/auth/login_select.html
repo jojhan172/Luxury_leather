@@ -1,0 +1,119 @@
+{% extends './base.html' %}
+    {% block title %}Create account{% endblock %}
+
+{% block customCSS %}
+<style>
+    body{
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .selectUserBox__logo{
+        position: absolute;
+        top: 12%;
+        width: 20em;
+    }
+    .selectUserBox__tittle{
+        position: absolute;
+        top: 20%;
+        font-size: var(--lg);
+    }
+
+    .selectUserBox{
+
+        position: absolute;
+        top: 26%;
+        display: flex;
+        justify-content: center;
+        gap: 2.5%;
+        width: 70%;
+    }
+    .selectUserBox__button{
+        padding: 4% 7% 4% 7%;
+        text-decoration: none;
+        font-size: var(--lg);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 40%;
+
+        /* hover effect block */
+        --b: 4px;    /* ancho del borde*/
+        --d: 20px;    /* profundo del cubo */
+        
+        --_s: calc(var(--d) + var(--b));
+        
+        color: var(--hospital-green);
+        border: 4px solid transparent; /*Borde claro*/
+        /*border: 4px solid var(--hospital-green); Borde oscuro */
+        border-width: var(--b) var(--b) var(--_s) var(--_s);
+        background:
+            conic-gradient(at left var(--d)  bottom var(--d),
+            #0000 90deg, rgb(255 255 255 /0.3) 0 225deg,rgb(255 255 255 /0.6) 0) border-box,
+            conic-gradient(at left var(--_s) bottom var(--_s),
+            #0000 90deg,var(--hospital-green) 0) 0 100%/calc(100% - var(--b)) calc(100% - var(--b))  border-box;
+        transform: translate(calc(var(--d)/-1),var(--d));
+        clip-path: 
+            polygon(
+            var(--d) 0%, 
+            var(--d) 0%, 
+            100% 0%, 
+            100% calc(100% - var(--d)),
+            100% calc(100% - var(--d)),
+            var(--d) calc(100% - var(--d))
+            );
+        transition: 0.5s;
+
+    }
+
+    .selectUserBox__button:hover{
+        transform: translate(0,0);
+        clip-path: 
+            polygon(
+            0% var(--d), 
+            var(--d) 0%, 
+            100% 0%, 
+            100% calc(100% - var(--d)), 
+            calc(100% - var(--d)) 100%, 
+            0% 100%
+        );
+    }
+
+    .selectUserBox__button img{
+        width: 80%;
+    }
+    .selectUserBox__button--text{
+        text-align: center;
+        padding: 10px;
+        width: 100%;
+        height: 50px;
+        margin-top: 15%;
+        margin-bottom: 16px;
+        align-self: center;
+
+        background-color: var(--hospital-green);
+        color: var(--white);
+        font-size: var(--lg);
+        border-radius: 2em;
+
+        cursor: pointer;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<img src="../../static/logo/logo_bota_fora.svg" alt="" class="selectUserBox__logo">
+<h1 class="selectUserBox__tittle">Select your user type</h1>
+<section class="selectUserBox">
+    <a href="/create_account_client" class="selectUserBox__button">
+        <img src="/static/icons/icon_client.svg" alt="">
+        <p class="selectUserBox__button--text">Client</p>
+    </a>
+    <a href="/" class="selectUserBox__button">
+        <img src="/static/icons/icon_seller.svg" alt="">
+        <p class="selectUserBox__button--text">Seller</p>
+    </a>
+</section>
+{% endblock %}

@@ -1,154 +1,147 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;700&family=Roboto:wght@700&display=swap" rel="stylesheet">
-    <title>Create account</title>
-    <style>
-        :root {
-            --white: #FFFFFF;
-            --black: #000000;
-            --very-light-grey: #c7c7c7;
-            --background-very-light-grey: #f8f8f8;
-            --text-input-field: #F7F7F7;
-            --hospital-green: #ACD9B2;
-            
-            --sm: 1.3rem;
-            --md: 1.5rem;
-            --lg: 1.8rem;
-        }
-        * {
-            box-sizing: border-box;
-            padding: 0px;
-            margin: 0px;
-        }
-        html {
-            font-size: 62.5%;
-        }
-        body{
-            font-family: 'Quicksand', sans-serif;
-            display: grid;
-            grid-template-rows: 20% 55% 25%;
-            height: 100vh;
-        }
-        .create-account-box {
-            grid-column: 1/1;
-            grid-row: 1/2;
+{% extends './base.html' %}
+    {% block title %}Create account{% endblock %}
 
-            display: flex;
-            flex-direction: column;
+{% block customCSS %}
+<style>
+body{
+    display: grid;
+    grid-template-rows: 20% 55% 25%;
+    height: 100vh;
+}
+.create-account-box {
+    grid-column: 1/1;
+    grid-row: 1/2;
 
-            top: 5%;
-            padding-left: 3%;
-            height: 95%;
-            width: 100%;   
-        }
-        .tittle {
-            margin-top: 8%;
-            margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
 
-            font-size: var(--lg);
-            text-align: left;
-            
-            font-family: 'Quicksand' ;
-            font-weight: 700;
-        }
-        .main-box__create-account-form {
-            display: flex;
-            flex-direction: column;
-        }
+    top: 5%;
+    padding-left: 3%;
+    height: 95%;
+    width: 100%;   
+}
+.tittle {
+    margin-top: 8%;
+    margin-bottom: 40px;
 
-        label {
-            font-size: var(--md);
-            font-weight: 700;
-            margin-bottom: 4px
-        }
-        input {
-            background-color: var(--text-input-field);
-            border: none;
-            border-radius: 8px;
-            font-size: var(--md);
-            height: 40px;
-            padding: 6px;
-            margin-bottom: 20px;
-        }
+    font-size: var(--lg);
+    text-align: left;
+    
+    font-family: 'Quicksand' ;
+    font-weight: 700;
+}
+.main-box__create-account-form {
+    display: flex;
+    flex-direction: column;
+}
 
-        .create-account-form__save-button {
-            padding: 10px;
-            width: 100%;
-            height: 50px;
-            margin-top: 35px;
-            margin-bottom: 16px;
-            align-self: center;
+    .message-box{
+        text-align: center ;
+        font-size: var(--md);
+        color: rgb(255, 132, 132);
+        height: 9vh;
+        margin-bottom: 16px;
+        padding: 5px;
+        border: 1px;
+        border-color: rgb(255, 144, 144);
+        box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;    
+}
 
-            background-color: var(--hospital-green);
-            color: var(--white);
-            font-size: var(--md);
-            font-weight: bold;
+label {
+    font-size: var(--md);
+    font-weight: 700;
+    margin-bottom: 4px
+}
+input {
+    background-color: var(--text-input-field);
+    border: none;
+    border-radius: 8px;
+    font-size: var(--md);
+    height: 40px;
+    padding: 6px;
+    margin-bottom: 20px;
+}
 
-            cursor: pointer;
-        }
+.create-account-form__save-button {
+    padding: 10px;
+    width: 100%;
+    height: 50px;
+    margin-top: 35px;
+    margin-bottom: 16px;
+    align-self: center;
 
-        .create-account-form__save-button {
-            position: absolute;
-            bottom: 0px;
-            border: solid 0px;
-            border-radius: 8px;
-            color: var(--white);
-            height: 50px;
-            width: 94%;
-            font-size: var(--lg);
-            font-weight: 500;
+    background-color: var(--hospital-green);
+    color: var(--white);
+    font-size: var(--md);
+    font-weight: bold;
 
-            background-color: var(--hospital-green);
-        }
+    cursor: pointer;
+}
 
-        @media (min-width: 760px) {
-            body {
-                grid-template-columns:37.5% 25% 37.5%;
-            }
+.create-account-form__save-button {
+    position: absolute;
+    bottom: 0px;
+    border: solid 0px;
+    border-radius: 8px;
+    color: var(--white);
+    height: 50px;
+    width: 94%;
+    font-size: var(--lg);
+    font-weight: 500;
 
-            .create-account-box {
-                grid-column: 2/3;
-                grid-row: 2/3; 
-                padding: 0;
-                top: 50%;
-                width: 100%;   
-                height: 85%;
-            }
+    background-color: var(--hospital-green);
+}
 
-            .create-account-form__save-button {
-                font-weight: 700;
-                bottom: 15%;
-                width: 25%;
-                height: 40px;
-                cursor: pointer;
-            } 
-        }
-    </style>
-</head>
-<body>
+@media (min-width: 760px) {
+    body {
+        grid-template-columns:37.5% 25% 37.5%;
+    }
+
+    .create-account-box {
+        grid-column: 2/3;
+        grid-row: 2/3; 
+        padding: 0;
+        top: 50%;
+        width: 100%;   
+        height: 85%;
+    }
+
+    .create-account-form__save-button {
+        font-weight: 700;
+        bottom: 15%;
+        width: 25%;
+        height: 40px;
+        cursor: pointer;
+    } 
+}
+</style>
+{% endblock %}
+
+{% block body %}
     <section class="create-account-box">
         <h1 class="tittle create-account-box__tittle">New account</h1>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <br>
+        {% for message in messages %}
+        <div class="message-box"><strong>{{ message }}</strong></div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
         <form action="/create_account" method="POST" class="create-account-form main-box__create-account-form">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             
             <label for="name-box" class="name-label create-account-form__name-label">Name</label>
-            <input type="text" id="name-box" placeholder="Camila Yokoo" class="name-input create-account-form__name-input" name="fullname">
+            <input type="text" id="name-box" placeholder="Camila Yokoo" class="name-input create-account-form__name-input" name="fullname" required>
 
             <label for="email-box" class="email-label create-account-form__email-label">Email addres</label>
-            <input type="email" id="email-box" placeholder="camilayokoo@email.com" class="email-input create-account-form__email-input" name="email" >
+            <input type="email" id="email-box" placeholder="camilayokoo@email.com" class="email-input create-account-form__email-input" name="email" required>
 
             <label for="password-box" class="password-label create-account-form__password-label">Password</label>
-            <input type="password" id="password-box" placeholder="***********" class="password-input create-account-form__password-input" name="password">
+            <input type="password" id="password-box" placeholder="***********" class="password-input create-account-form__password-input" name="password" required>
             
             <button type="submit" value="Log in" class="create-account-form__save-button">Create account</button>
 
         </form>
     </section>
-</body>
-</html>
+{% endblock %}
