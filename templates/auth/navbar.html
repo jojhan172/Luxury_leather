@@ -27,8 +27,8 @@
             </ul>
         </div>
         <div class="navbar-right">
-            <ul>
-                <li class="navbar__email">{{ current_user.username }}</li>
+            <ul>   <!-- User name only exist with clients and companyName only exist with seller so we can use them in the same line -->
+                <li class="navbar__email">{{ current_user.username }}{{current_user.companyName}}</li>
                 <li class="navbar__toggle">
                     <img src="../static/icons/flechita.svg" alt="">
                 </li>
@@ -52,5 +52,6 @@
         </div>
     </nav>
     <script src="{{ url_for ('static', filename = 'js/main.js') }}"></script>
+    <h1>{{  userType }}</h1>
 </body>
 </html>
