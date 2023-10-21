@@ -20,6 +20,12 @@ body{
     height: 95%;
     width: 100%;   
 }
+
+.create-account-box__logo{
+    align-self: center;
+    width: 20em;
+    margin-bottom: 2em;
+}
 .tittle {
     margin-top: 8%;
     margin-bottom: 40px;
@@ -107,9 +113,9 @@ input {
     }
 
     .create-account-form__save-button {
+        position: relative;
         font-weight: 700;
-        bottom: 15%;
-        width: 25%;
+        width: 100%;
         height: 40px;
         cursor: pointer;
     } 
@@ -119,20 +125,30 @@ input {
 
 {% block body %}
     <section class="create-account-box">
+        <img src="../../static/logo/logo_bota_fora.svg" alt="BotaFora logo" class="create-account-box__logo">
         <h1 class="tittle create-account-box__tittle">New account</h1>
         {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <br>
-        {% for message in messages %}
-        <div class="message-box"><strong>{{ message }}</strong></div>
-        {% endfor %}
-        {% endif %}
+            {% if messages %}
+            <br>
+                {% for message in messages %}
+                    {% if message == "Usuario registrado correctamente." %}
+                    <div class="message-box"><strong>{{ message }}<a href="/client_login" style="text-decoration: none; color:#ACD9B2;"> Iniciar sesión</a></strong></div>
+                    {% else %}
+                    <div class="message-box"><strong>{{ message }}</strong></div>
+                    {% endif %}
+                    
+                {% endfor %}
+            {% endif %}
         {% endwith %}
-        <form action="/create_account" method="POST" class="create-account-form main-box__create-account-form">
+        <form action="/create_account_client" method="POST" class="create-account-form main-box__create-account-form">  
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="user_type" value="client">
             
             <label for="name-box" class="name-label create-account-form__name-label">Name</label>
             <input type="text" id="name-box" placeholder="Camila Yokoo" class="name-input create-account-form__name-input" name="fullname" required>
+
+            <label for="name-box" class="name-label create-account-form__name-label">Nickname</label>
+            <input type="text" id="name-box" placeholder="Cami1020" class="name-input create-account-form__name-input" name="username" required>
 
             <label for="email-box" class="email-label create-account-form__email-label">Email addres</label>
             <input type="email" id="email-box" placeholder="camilayokoo@email.com" class="email-input create-account-form__email-input" name="email" required>

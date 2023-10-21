@@ -1,0 +1,164 @@
+{% extends './base.html' %}
+    {% block title %}Create account{% endblock %}
+
+    {% block customCSS %}
+    <style>
+    body{
+        display: grid;
+        grid-template-rows: 12% 55% 25%;
+        height: 100vh;
+    }
+    .create-account-box {
+        grid-column: 1/1;
+        grid-row: 1/2;
+    
+        display: flex;
+        flex-direction: column;
+    
+        top: 5%;
+        padding-left: 3%;
+        height: 95%;
+        width: 100%;   
+    }
+    
+    .create-account-box__logo{
+        align-self: center;
+        width: 20em;
+        margin-bottom: 2em;
+    }
+    .tittle {
+        margin-top: 8%;
+        margin-bottom: 40px;
+    
+        font-size: var(--lg);
+        text-align: left;
+        
+        font-family: 'Quicksand' ;
+        font-weight: 700;
+    }
+    .main-box__create-account-form {
+        display: flex;
+        flex-direction: column;
+    }
+    
+        .message-box{
+            text-align: center ;
+            font-size: var(--md);
+            color: rgb(255, 132, 132);
+            height: 9vh;
+            margin-bottom: 16px;
+            padding: 5px;
+            border: 1px;
+            border-color: rgb(255, 144, 144);
+            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;    
+    }
+    
+    label {
+        font-size: var(--md);
+        font-weight: 700;
+        margin-bottom: 4px
+    }
+    input {
+        background-color: var(--text-input-field);
+        border: none;
+        border-radius: 8px;
+        font-size: var(--md);
+        height: 40px;
+        padding: 6px;
+        margin-bottom: 20px;
+    }
+    
+    .create-account-form__save-button {
+        padding: 10px;
+        width: 100%;
+        height: 50px;
+        margin-top: 35px;
+        margin-bottom: 16px;
+        align-self: center;
+    
+        background-color: var(--hospital-green);
+        color: var(--white);
+        font-size: var(--md);
+        font-weight: bold;
+    
+        cursor: pointer;
+    }
+    
+    .create-account-form__save-button {
+        position: relative;
+        bottom: 0px;
+        border: solid 0px;
+        border-radius: 8px;
+        color: var(--white);
+        height: 50px;
+        margin-right: 20px;
+        font-size: var(--lg);
+        font-weight: 500;
+    
+        background-color: var(--hospital-green);
+    }
+    
+    @media (min-width: 760px) {
+        body {
+            grid-template-columns:37.5% 25% 37.5%;
+        }
+    
+        .create-account-box {
+            grid-column: 2/3;
+            grid-row: 2/3; 
+            padding: 0;
+            top: 50%;
+            width: 100%;   
+            height: 85%;
+        }
+    
+        .create-account-form__save-button {
+            position: relative;
+            font-weight: 700;
+            bottom: 15%;
+            width: 100%;
+            height: 40px;
+            margin-top: 76px ;
+            cursor: pointer;
+        } 
+    }
+    </style>
+    {% endblock %}
+{% block body %}
+<section class="create-account-box">
+    <img src="../../static/logo/logo_bota_fora.svg" alt="BotaFora logo" class="create-account-box__logo">
+    <h1 class="tittle create-account-box__tittle">New account</h1>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <br>
+            {% for message in messages %}
+                {% if message == "Usuario registrado correctamente." %}
+                <div class="message-box"><strong>{{ message }}<a href="/client_login" style="text-decoration: none; color:#ACD9B2;"> Iniciar sesión</a></strong></div>
+                {% else %}
+                <div class="message-box"><strong>{{ message }}</strong></div>
+                {% endif %}
+                
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <form action="/create_account_seller" method="POST" class="create-account-form main-box__create-account-form">  
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input type="hidden" name="user_type" value="client">
+        
+        <label for="name-box" class="name-label create-account-form__name-label">CEO Name</label>
+        <input type="text" id="name-box" placeholder="Camila Yokoo" class="name-input create-account-form__name-input" name="ceoName" required>
+
+        <label for="email-box" class="email-label create-account-form__email-label">Email addres</label>
+        <input type="email" id="email-box" placeholder="camilayokoo@email.com" class="email-input create-account-form__email-input" name="email" required>
+
+        <label for="password-box" class="password-label create-account-form__password-label">Password</label>
+        <input type="password" id="password-box" placeholder="***********" class="password-input create-account-form__password-input" name="password" required>
+        
+        <label for="password-box" class="password-label create-account-form__password-label">Company Name</label>
+        <input type="text" id="companyName-box" placeholder="Luxury Leather" class="company-input create-account-company-input" name="company" required>
+        
+        <button type="submit" value="Log in" class="create-account-form__save-button">Create account</button>
+
+    </form>
+</section>
+{% endblock %}
