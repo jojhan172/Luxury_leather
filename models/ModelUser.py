@@ -13,7 +13,6 @@ class ModelUser():
         
         try:
             cursor = db.cursor()
-
             cursor.execute(sql)
             row = cursor.fetchone()
             if row != None:
@@ -46,7 +45,7 @@ class ModelUser():
             raise Exception(ex)
         
     @classmethod
-    def addToDataBase(self, db, sql):
+    def addToDataBase(self, db, sql:str): # sql = la sentencia SQL
         try: 
             cursor = db.cursor()
             cursor.execute(sql)
@@ -78,6 +77,3 @@ class ModelUser():
         except Exception as ex:
             raise Exception(ex)
     
-
-
-        

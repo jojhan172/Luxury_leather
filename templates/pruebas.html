@@ -1,0 +1,33 @@
+{% extends './base.html' %}
+    {% block title %}home{% endblock %}
+
+{% block customCSS %}
+   
+{% endblock %}
+
+{% block body %}
+
+{% include 'auth/navbar.html' %} <!-- De esta forma copiamos todo lo que tiene navbar -->
+
+<!--current_user.property -> para usar las propiedades que declaramos en el archivo User.py-->
+    <h1>Bienvenido, {{ current_user.username }}</h1> 
+    <a href="{{ url_for('logout') }}">Logout</a>
+    {% with products = funcion() %} <!-- Creamos una variable que contenga todos los datos de todos los productos  -->
+    {% for product in products  %} <!-- Esto es una lista por la forma que creamos la función asi que podemos recorrer cada producto -->
+        <p>{{product[1]}}</p> <!-- En cada indice se encuentra cada dato (db indices)-->
+    {% endfor %}
+    {% endwith %}
+    <p></p>
+
+
+    <!--La forma de verificar el tipo de usuario que tenemmos instanciado-->
+    {% if current_user.userType == "client" %}
+        <h1>client</h1>
+    {% else %}
+        <h1>seller</h1>
+    {% endif %}
+
+    
+
+
+{% endblock %}

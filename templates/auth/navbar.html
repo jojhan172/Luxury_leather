@@ -40,10 +40,18 @@
         <div class="desktop-menu inactive">
             <ul>
                 <li>
-                    <a href="/" class="tittle">My orders</a>
+                    {% if current_user.userType == "client" %}
+                        <a href="/" class="tittle">My orders</a>
+                    {% else %}
+                        <a href="/my_account">My Products</a>
+                    {% endif %}
                 </li>
                 <li>
-                    <a href="/">My account</a>
+                    {% if current_user.userType == "client" %}
+                        <a href="/my_account">My account</a>
+                    {% else %}
+                        <a href="/my_account">My store</a>
+                    {% endif %}
                 </li>
                 <li>
                     <a href="{{ url_for('logout') }}">Sign Out</a>
@@ -52,6 +60,5 @@
         </div>
     </nav>
     <script src="{{ url_for ('static', filename = 'js/main.js') }}"></script>
-    <h1>{{  userType }}</h1>
 </body>
 </html>

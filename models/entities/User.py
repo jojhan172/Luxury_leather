@@ -19,11 +19,11 @@ class Client(User):
         
 
 class Seller(User):
-    def __init__(self, id, email, password, ceoName="", companyName="", usertype="") -> None:
+    def __init__(self, id, email, password, ceoName="", companyName="", userType="") -> None:
         super().__init__(id, email, password)
         self.ceoName = ceoName
         self.companyName = companyName
-        self.userType = usertype
+        self.userType = userType
 
 
 
