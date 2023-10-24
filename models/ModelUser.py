@@ -62,14 +62,12 @@ class ModelUser():
             cursor.execute(sql)
             row = cursor.fetchone()
             if row != None:
-                print(row)
                         # id, email, password, fullname, username, postal_code, adress, city, phone, userType
                 return Client(row[0], row[1], None, row[3], row[2], row[5], row[6], row[7], row[8], row[9]) 
             elif row == None:
                 sql = "SELECT id, email, ceoName, companyName, userType FROM seller_users WHERE id = '{}'".format(id)
                 cursor.execute(sql)
                 row = cursor.fetchone()
-                print(row)
                         # id, email, password, ceoName, companyNmae, userType
                 return Seller(row[0], row[1], None, row[2], row[3], row[4])
             else:

@@ -4,12 +4,15 @@
 {% block customCSS %}
     <style>
         .main-box {
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            padding: 15px;
+            height: auto;
             display: flex;
             position: absolute;
             top: 15%;
             flex-direction: column;
             justify-self: center;
-            height: 50%;
             width: 90%;   
         }
 
@@ -124,7 +127,7 @@
 
 {% block body %}
     <section class="main-box">
-        <img src="../../static/logo/logo_bota_fora.svg" alt="logo" class="main-box__img">
+        <img src="../../static/luxuryLeatherLogoPack/svg/logo-no-background.svg" alt="logo" class="main-box__img">
         {% with messages = get_flashed_messages() %}
         {% if messages %}
         <br>

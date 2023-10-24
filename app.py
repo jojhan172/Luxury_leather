@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_mysqldb import MySQL
-from flask_login import LoginManager, login_user, logout_user, login_required
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_wtf.csrf import CSRFProtect
 
 import mysql.connector
@@ -30,7 +30,6 @@ db = mysql.connector.connect(
 
 # Our way to mantain a user logged, LoginManger allows lots of things but we use just one, user_loader
 login_manager_app = LoginManager(app) 
-    
 
 def takeProducts():
     cursor = db.cursor()
@@ -45,20 +44,20 @@ def load_user(id):
 
 # --------------- VIEWS ----------------------
 
-@app.route('/')
+@app.route('/', methods = ['GET', 'POST'])
 def index():
     return redirect(url_for('login_user_select'))
 
-@app.route('/home')
+@app.route('/home', methods = ['GET', 'POST'])
 def home():
     return render_template('auth/home.html', funcion=takeProducts)
 
-@app.route('/navbar')
+@app.route('/navbar', methods = ['GET', 'POST'])
 def navbar():
     return render_template('auth/navbar')
     #return render_template('home.html', funcion=takeProducts) 
 
-@app.route('/register_user_select')
+@app.route('/register_user_select', methods = ['GET', 'POST'])
 def register_user_select():
     return render_template('auth/register__user_select.html')
 
@@ -106,7 +105,7 @@ def seller_register(): # -> here we do the same as for the client function
     else:
         return render_template('auth/create_account_seller.html')
 
-@app.route('/login_user_select')
+@app.route('/login_user_select', methods = ['GET', 'POST'])
 def login_user_select():
     return render_template('auth/login_user_select.html')
 
@@ -151,14 +150,26 @@ def seller_login():
     else:
         return render_template('auth/seller_login.html')
     
-@app.route('/my_account')
+@app.route('/my_account', methods = ['GET', 'POST'])
 @login_required
 def my_account():
     return render_template('auth/my_account.html')
 
-@app.route('/my_account_edit')
+@app.route('/my_account_edit', methods = ['GET', 'POST'])
 def my_account_edit():
     return render_template('auth/my_account_edit.html')
+
+@app.route('/my_products', methods = ['GET', 'POST'])
+def my_products():
+    
+    if request.method == 'POST':
+        productId = uuid.uuid4()
+
+        product = Product(productId, request.form['productName'], request.form['price'], request.form['userId'], request.form['imgURL']  )
+        product.addToDb(db)
+        return render_template('auth/my_products.html')
+    else:
+        return render_template('auth/my_products.html')
 
 @app.route('/logout')
 def logout():

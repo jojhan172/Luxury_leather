@@ -1,9 +1,9 @@
 :root {
     --white: #FFFFFF;
     --bkack: #000000;
-    --very-light-grey: #c7c7c7;
+    --very-light-grey: rgb(99, 99, 99);
     --text-input-field: #F7F7F7;
-    --hospital-green: #ACD9B2;
+    --hospital-green: #CDA434;
     
     --sm: 1.4rem;
     --md: 1.5rem;

@@ -5,19 +5,18 @@
 <style>
 body{
     display: grid;
-    grid-template-rows: 20% 55% 25%;
+    grid-template-rows: 10% 80% 10%;
     height: 100vh;
 }
 .create-account-box {
+    padding: 2em;
     grid-column: 1/1;
     grid-row: 1/2;
 
     display: flex;
     flex-direction: column;
 
-    top: 5%;
-    padding-left: 3%;
-    height: 95%;
+    top: 2%;
     width: 100%;   
 }
 
@@ -104,12 +103,17 @@ input {
     }
 
     .create-account-box {
+        border: 1px solid #ccc;
+        border-radius: 15px;
+        padding: 15px;
+        height: auto;
+
         grid-column: 2/3;
         grid-row: 2/3; 
-        padding: 0;
+
         top: 50%;
         width: 100%;   
-        height: 85%;
+        height: auto;
     }
 
     .create-account-form__save-button {
@@ -125,7 +129,7 @@ input {
 
 {% block body %}
     <section class="create-account-box">
-        <img src="../../static/logo/logo_bota_fora.svg" alt="BotaFora logo" class="create-account-box__logo">
+        <img src="../../static/luxuryLeatherLogoPack/svg/logo-no-background.svg" alt="BotaFora logo" class="create-account-box__logo">
         <h1 class="tittle create-account-box__tittle">New account</h1>
         {% with messages = get_flashed_messages() %}
             {% if messages %}

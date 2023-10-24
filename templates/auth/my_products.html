@@ -1,0 +1,27 @@
+{% extends './base.html' %}
+    {% block title %}My Product{% endblock %}
+
+
+    {% block customCSS %}
+    {% endblock %}
+
+{% block body %}
+    {% include 'auth/navbar.html' %} <!-- De esta forma copiamos todo lo que tiene navbar -->
+    <h1>fasdfsd</h1>
+
+    <form action="/my_products" method="POST" class="login-form main-box__login-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input type="hidden" value="{{ current_user.id }}" name="userId">
+
+        <label for="email-box" class="email-label login-form__email-label">Product Name</label>
+        <input type="text" id="email-box" name="productName" placeholder="botafora@email.com" class="email-input login-form__email-input" required>
+
+        <label for="email-box" class="email-label login-form__email-label">Product price</label>
+        <input type="number" id="email-box" name="price" placeholder="botafora@email.com" class="email-input login-form__email-input" required>
+
+        <label for="email-box" class="email-label login-form__email-label">Url de la imagen</label>
+        <input type="text" id="email-box" name="imgURL" placeholder="botafora@email.com" class="email-input login-form__email-input" required>
+
+        <button type="submit" value="Log in" class="login-form__login-button">Log in</button>
+    </form>
+{% endblock %}
