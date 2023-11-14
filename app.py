@@ -31,9 +31,44 @@ db = mysql.connector.connect(
 # Our way to mantain a user logged, LoginManger allows lots of things but we use just one, user_loader
 login_manager_app = LoginManager(app) 
 
-def takeProducts():
+def takeProducts() -> list:
     cursor = db.cursor()
-    sql = "SELECT * FROM `client_users`"
+    sql = "SELECT * FROM `products` LIMIT 2"
+    cursor.execute(sql)
+    row = list(cursor.fetchall())
+    return row
+
+def takeProductsWithLimit(limit: int) -> list:
+    cursor = db.cursor()
+    sql = "SELECT * FROM `products` LIMIT {}".format(limit)
+    cursor.execute(sql)
+    row = list(cursor.fetchall())
+    return row
+
+def takeProductsBySeller(sellerId:str) -> list:
+    cursor = db.cursor() 
+    sql = "SELECT * FROM `products` WHERE `sellerId` LIKE '{}'".format(sellerId)
+    cursor.execute(sql)
+    row = list(cursor.fetchall())
+    return row
+
+def takeProductsById(productId: str)-> list:
+    cursor = db.cursor() 
+    sql = "SELECT * FROM `products` WHERE `id` LIKE '{}'".format(productId)
+    cursor.execute(sql)
+    row = list(cursor.fetchall())
+    return row
+
+def editProduct(productId:str) -> list:
+    cursor = db.cursor()
+    sql= ""
+    cursor.execute(sql)
+    db.commit()
+    return flash("El producto se edito correctamente")
+
+def takeSellerById(sellerId: str) -> list:
+    cursor  = db.cursor()
+    sql = "SELECT * FROM `seller_users` WHERE `id` Like '{}'".format(sellerId)
     cursor.execute(sql)
     row = list(cursor.fetchall())
     return row
@@ -54,8 +89,7 @@ def home():
 
 @app.route('/navbar', methods = ['GET', 'POST'])
 def navbar():
-    return render_template('auth/navbar')
-    #return render_template('home.html', funcion=takeProducts) 
+    return render_template('auth/navbar.html')
 
 @app.route('/register_user_select', methods = ['GET', 'POST'])
 def register_user_select():
@@ -149,7 +183,30 @@ def seller_login():
             return render_template('auth/seller_login.html')
     else:
         return render_template('auth/seller_login.html')
-    
+
+@app.route('/my_products', methods = ['GET', 'POST'])
+@login_required
+def my_products():
+    if request.method == 'POST':
+        return render_template('auth/my_products.html', TakeProducts=takeProductsBySeller)
+    else:
+        return render_template('auth/my_products.html', TakeProducts=takeProductsBySeller)
+
+@app.route('/add_new_product', methods=['GET','POST'])
+def add_new_product():
+    if request.method == 'POST':
+        productId = uuid.uuid4()
+        product = Product(productId, request.form['productName'], request.form['price'], request.form['userId'], request.form['imgURL']  )
+        product.addToDb(db)
+        flash("Producto agregado correctamente")
+        return render_template('auth/add_new_product.html')
+    else:
+        return render_template('auth/add_new_product.html') 
+
+@app.route('/view_product/<productId>/', methods=['GET','POST'])
+def view_my_product(productId):
+    return render_template('auth/view_product.html', productId=productId, takeProductById=takeProductsById(productId), takeSellerById=takeSellerById, takeProductsWithLimit=takeProductsWithLimit) # , ,editProduct = editProduct()
+
 @app.route('/my_account', methods = ['GET', 'POST'])
 @login_required
 def my_account():
@@ -159,17 +216,12 @@ def my_account():
 def my_account_edit():
     return render_template('auth/my_account_edit.html')
 
-@app.route('/my_products', methods = ['GET', 'POST'])
-def my_products():
-    
-    if request.method == 'POST':
-        productId = uuid.uuid4()
+@app.route('/edit_product/<productId>')
+def edit_Product(productId):
+    # La idea aqui es que el programa reciba el product ID desde la pagina web y con eso
+    # porderlo sacar de la base de datos para denrerizarlo
+    return render_template('auth/edit_product.html', takeProductById = takeProductsById(productId))
 
-        product = Product(productId, request.form['productName'], request.form['price'], request.form['userId'], request.form['imgURL']  )
-        product.addToDb(db)
-        return render_template('auth/my_products.html')
-    else:
-        return render_template('auth/my_products.html')
 
 @app.route('/logout')
 def logout():

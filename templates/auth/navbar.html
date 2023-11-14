@@ -18,7 +18,7 @@
         <div class="navbar-left">
             <img src="../../static/luxuryLeatherLogoPack/svg/logo-no-background.svg" alt="logo" class="logo">
             <ul>
-                <li><a href="/">All</a></li>
+                <li><a href="/home">All</a></li>
                 <li><a href="/">Clothes</a></li>
                 <li><a href="/">Electronics</a></li>
                 <li><a href="/">Furniture</a></li>
@@ -30,10 +30,10 @@
             <ul>   <!-- User name only exist with clients and companyName only exist with seller so we can use them in the same line -->
                 <li class="navbar__email">{{ current_user.username }}{{current_user.companyName}}</li>
                 <li class="navbar__toggle">
-                    <img src="../static/icons/flechita.svg" alt="">
+                    <img src="../../static/icons/flechita.svg" alt="">
                 </li>
                 <li class="navbar__shopping-cart">
-                    <img src="../static/icons/icon_shopping_cart_notification.svg" alt="">
+                    <img src="../../static/icons/icon_shopping_cart_notification.svg" alt="">
                 </li>
             </ul>
         </div>
@@ -43,7 +43,7 @@
                     {% if current_user.userType == "client" %}
                         <a href="/" class="tittle">My orders</a>
                     {% else %}
-                        <a href="/my_account">My Products</a>
+                        <a href="/my_products">My Products</a>
                     {% endif %}
                 </li>
                 <li>

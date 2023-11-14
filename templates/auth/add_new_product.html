@@ -1,0 +1,125 @@
+{% extends './auth/base.html' %}
+    {% block title %}My Product{% endblock %}
+
+
+{% block customCSS %}
+    <style>
+        body{
+            display: flex;
+            flex-direction: column;
+        }
+        main{
+            display: grid;
+            grid-template-rows: 1fr 3fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr;
+            height: 90vh;
+        }
+
+        .main-container{
+            grid-column: 2/3;
+            grid-row: 2/3;
+
+            display: inherit;
+            
+            position: relative;
+        }
+
+        .main-container h1{
+
+            justify-self: center;
+            font-size: var(--lg);
+        }
+
+        .create-product-form{
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            padding: 15px;
+            width: 100%;
+            height: 100%;
+
+        }
+
+            .message-box{
+                text-align: center ;
+                font-size: var(--md);
+                color: rgb(255, 132, 132);
+                height: 9vh;
+                margin-bottom: 16px;
+                padding: 5px;
+                border: 1px;
+                border-color: rgb(255, 144, 144);
+                box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;    
+        }
+
+        label {
+            font-size: var(--md);
+            font-weight: 700;
+            margin-bottom: 4px
+        }
+        input {
+            background-color: var(--text-input-field);
+            border: none;
+            border-radius: 8px;
+            font-size: var(--md);
+            height: 40px;
+            padding: 6px;
+            margin-bottom: 20px;
+        }
+
+        .create-product-form__submit {
+            position: absolute;
+            bottom: 16px;
+            width: 90%;
+            height: 50px;
+            border-radius: 15px;
+            bottom: 10px;
+            align-self: center;
+
+            background-color: var(--hospital-green);
+            color: var(--white);
+            font-size: var(--md);
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        @media (min-width: 760px) {
+            main {
+                grid-template-rows: 1fr 3fr 1fr;
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+
+            .create-account-form{
+                justify-self: center;
+                width: 80%;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    {% include 'auth/navbar.html' %}
+    <main>
+        <section class="main-container">
+            <h1>Añade un nuevo producto a {{current_user.companyName}}!</h1>
+            <form action="/add_new_product" method="POST" class="create-product-form">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" value="{{ current_user.id }}" name="userId">
+        
+                <label for="email-box" class="create-product-form__label">Product Name</label>
+                <input type="text" id="email-box" name="productName" placeholder="Nike sb Dunk" class="create-account-form__input" required>
+        
+                <label for="email-box" class="create-product-form__label">Product price (USD$)</label>
+                <input type="number" id="email-box" name="price" placeholder="125,00" class="create-account-form__input" required>
+        
+                <label for="email-box" class="create-product-form__labeld">Url de la imagen</label>
+                <input type="text" id="email-box" name="imgURL" placeholder="https//:image.jpg" class="create-account-form__input" required>
+        
+                <button type="submit" value="Creat product" class="create-product-form__submit">Create Product</button>
+            </form>
+        </section>
+    </main>
+
+{% endblock %}

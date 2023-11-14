@@ -1,0 +1,216 @@
+{% extends './auth/base.html' %}
+    {% block title %}My Product{% endblock %}
+
+{% block customCSS %}
+    <style>
+        main{
+            display: grid;
+            grid-template-columns: 3fr 1.5fr;
+            column-gap: 20px;
+            margin-left: 160px;
+            margin-right: 160px;
+            margin-top: 20px;
+            border: 1px solid;
+            border-radius: 25px;
+            padding: 20px;
+            border-color: #aaaaaa;
+        }
+
+        .product-info{
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-info__img {
+            width: 100%;
+            border-radius: 25px;
+            
+        }
+
+        .product-info__product-name{
+            position: relative;
+            left: 28px;
+            margin-top: 20px;
+            font-size: var(--very-lg);
+        }
+
+        .product-info__price{
+            position: relative;
+            left: 28px;
+            font-weight:900;
+            font-size: var(--price-sz);
+        }
+
+        .product-info__company{
+            position: relative;
+            text-decoration: none;
+            left: 28px;
+            font-size: var(--lg);
+            font-weight: 700;
+            color: var(--very-light-grey);
+        }
+
+        .product-info__desc{
+            width: 96%;
+            margin-top: 20px;
+            position: relative;
+            left: 28px;
+            font-size: var(--md);
+        }
+        .edit-product-button{
+            position: relative;
+            left: 28px;
+
+
+            display: grid;
+            place-items: center;
+            height: 100vh;
+
+            text-align: center;
+            margin-top: 20px;
+            width: 36%;
+            height: 50px;
+            border-radius: 15px;
+
+            background-color: var(--hospital-green);
+            color: var(--white);
+            font-size: var(--md);
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .edit-product-button a{
+            text-decoration: none;
+            color: white;
+        }
+
+        .recommended{
+            display: flex;
+            flex-direction: column;
+            row-gap: 20px;
+        }
+
+        .recommended__product-box{
+            text-decoration: none;
+            display: flex;
+            width: 100%;
+            border: 1px solid;
+            border-radius: 25px;
+            border-color: #aaaaaa;
+            padding: 8px;
+        }
+
+        .product-box__img-container {
+            display: flex;
+            width: 30%;
+            margin-right: 20px;
+        }
+
+        .product-box__img-container img{
+
+            align-self: center;
+            width: 100%;
+            border-radius: 12px;
+        }
+
+        .product-box__info-container {
+            width: 70%;
+            color: var(--black);
+            row-gap: 5px;
+        }
+
+        .product-box__info-container p:nth-child(1){
+            font-size: var(--md);
+            font-weight: 600;
+        }
+        .product-box__info-container p:nth-child(2){
+            font-size: var(--lg);
+            font-weight: 600;
+        }
+
+        .product-box__info-container p:nth-child(3){
+            font-size: var(--very-sm);
+            font-weight: 600;
+            color: #aaaaaa;
+        }
+
+    </style>
+
+
+{% endblock %}
+
+{% block body %}
+<header>
+    {% include 'auth/navbar.html' %}
+</header>
+<main>
+    {% with product = takeProductById %}
+    {% with seller = takeSellerById(product[0][3]) %}
+    
+
+    <!-- my_product Variables
+
+        main product details    
+            productId = product[0][0] 
+            productName = product[0][1]
+            productPrice = product[0][2]
+            sellerId = product[0][3]
+            productImgRef = product[0][4]
+
+        seller details
+            seller id = seller[0][0]
+            sellerCEO = selelr[0][3]
+            sellerComp = seller[0][4]
+
+        other products details
+            productName = product[1]
+            price = product[2]
+            sellerId = product[3]
+            productImgRef = product[4]
+
+
+    -->
+    <section class="product-info">
+        <img src="{{product[0][4]}}" alt="{{product[0][1]}}" class="product-info__img">
+        <h2 class="product-info__product-name">{{product[0][1]}}</h2>
+        <p class="product-info__price">{{product[0][2]}} USD $</p>
+        <a href="/" class="product-info__company">{{seller[0][4]}}</a>
+        <p class="product-info__desc">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi odit itaque deserunt sapiente sit ullam in vitae non pariatur quibusdam a corporis cumque, magnam veritatis molestias dolores ab ipsum voluptates?</p>
+        <!--company name-->
+        {% if current_user.userType == 'seller' %}
+        <div class="edit-product-button">
+            <a href="/edit_product/{{product[0][0]}}" >edit product</a>
+        </div>
+        {% endif %}
+    </section>
+    
+
+    <aside class="recommended">
+        <!---->
+        {% with otherProducts = takeProductsWithLimit(10) %} <!--This int int he function is the max num of products we want to see in the page-->
+            {% for item in otherProducts  %}
+                {% if item[0] != product[0][0] %}
+                <a href="/view_product/{{item[0]}}/" class="recommended__product-box">
+                    <div class="product-box__img-container">
+                        <img src="{{item[4]}}" alt="{{item[1]}}">
+                    </div>
+                    <div class="product-box__info-container">
+                        <p>{{item[1]}}</p>
+                        <p>{{item[2]}} USD$</p>
+                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Harum tempora fuga ab consequatur dolorum sed, odit libero minima error aperiam perspiciatis necessitatibus aut qui </p>
+                    </div>
+                </a>
+                {% endif %}
+            {% endfor %}
+        {% endwith %}
+        {% if current_user.userType == 'client' %}
+        {% endif %}
+    </aside>
+    
+
+    {% endwith %}
+    {% endwith %}
+</main>
+
+{% endblock %}

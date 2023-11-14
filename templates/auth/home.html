@@ -1,8 +1,18 @@
-{% extends './base.html' %}
+{% extends './auth/base.html' %}
     {% block title %}home{% endblock %}
 
 {% block customCSS %}
    <style>
+
+        header{
+            display: flex;
+            flex-direction: column;
+        }
+
+        header h1{
+            margin-top: 2em;
+            align-self: center;
+        }
     /* Main grid -> items grid */
         .cards-box {
             margin-top: 1em;
@@ -20,12 +30,13 @@
         }
 
         .product-card img{
-            width: 140px;
-            height: 140px;
+            width: 150px;
             border-radius: 20px;
 
-            object-fit: cover;
+            
         }
+
+        
         
         .product-info {
             display: flex;
@@ -66,8 +77,7 @@
             }
 
             .product-card img {
-                width: 240px;
-                height: 240px;
+                width: 200px;
             }
         }
       
@@ -76,27 +86,29 @@
 
 {% block body %}
 <!--current_user.property -> para usar las propiedades que declaramos en el archivo User.py-->
-    {% include 'auth/navbar.html' %} <!-- De esta forma copiamos todo lo que tiene navbar -->
-    <section class="main_container">
-        <div class="cards-box">
-            {% with products = funcion() %} <!-- Creamos una variable que contenga todos los datos de todos los productos  -->
-                {% for product in products  %} <!-- Esto es una lista por la forma que creamos la función asi que podemos recorrer cada producto -->
-                    <div class="product-card cards-box__product-card" id="">
-                        <img src="https://images.pexels.com/photos/1383834/pexels-photo-1383834.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" class="product-img">
-                        <div class="product-info">
-                            <div>
-                                <p>{{product[4]}}</p><!-- En cada indice se encuentra cada dato (db indices)-->
-                                <p>{{product[2]}}</p>
-                            </div>
-                            <figure>
-                                <img src="./assets/icons/bt_add_to_cart.svg" alt="">
-                            </figure>
+    <header>
+        {% include 'auth/navbar.html' %}
+        <h1>Bienvenido a Luxury Leather!</h1> <!-- De esta forma copiamos todo lo que tiene navbar -->
+    </header>
+    <main class="cards-box">
+        {% with products = funcion() %}
+            {% for product in products  %}
+                <a href="/home" class="product-card">
+                    <img src="{{product[4]}}" alt="" class="product-img">
+                    <div class="product-info">
+                        <div>
+                            <p>{{product[1]}}</p>
+                            <p>{{product[2]}} USD$ </p>
                         </div>
-                    </div> 
-                {% endfor %}
-            {% endwith %}
-        </div>
-    </section>
+                        <figure>
+                            <img src="../../static/icons/bt_add_to_cart.svg" alt="">
+                        </figure>
+                    </div>
+                    
+                </a> <!-- Esto es una lista por la forma que creamos la función asi que podemos recorrer cada producto -->
+            {% endfor %}
+        {% endwith %}
+    </main>
 
     <script src="{{ url_for ('static', filename = 'js/main.js') }}"></script>
     
