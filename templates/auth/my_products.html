@@ -111,6 +111,9 @@
         {% include 'auth/navbar.html' %} <!-- De esta forma copiamos todo lo que tiene navbar --> 
         <h1>Hola! {{ current_user.ceoName }}</h1>
         <h2>Aquí estan todos los productos de {{ current_user.companyName }}, haz click sobre cada uno de ellos para editarlos</h2>    
+        {% if message %}
+            <h2>{{ message }}</>
+        {% endif %}
     </header>
     <main class="cards-box">
         {% with products = TakeProducts(current_user.id) %}

@@ -103,7 +103,7 @@
     
     {% if current_user.userType == 'client' %}
     <h1 class="tittle edit-account-box__tittle">My account</h1>
-    <form action="/my_account_edit" class="edit-form main-box__edit-form">
+    <form action="/my_account_edit/" class="edit-form main-box__edit-form"">
         <label for="name-box" class="name-label edit-form__name-label">Name</label>
         <p>{{ current_user.email }}</p>
 
@@ -127,12 +127,12 @@
 
         <label for="name-box" class="name-label edit-form__name-label">Phone</label>
         <p>{{ current_user.phone }}</p>
-
-        <button type="submit" value="Edit" class="edit-form__edit-button" > Edit my account</button>
     </form>
+    <a href="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" class="edit-form__edit-button">Edit Account</a>
+    
     {% else %}
     <h1 class="tittle edit-account-box__tittle">My company</h1>
-    <form action="/my_account_edit" class="edit-form main-box__edit-form">
+    <form action="/my_account_edit/{{current_user.userType}}" class="edit-form main-box__edit-form">
         <label for="name-box" class="name-label edit-form__name-label">Email</label>
         <p>{{ current_user.email }}</p>
 
@@ -145,8 +145,8 @@
         <label for="name-box" class="name-label edit-form__name-label">Company Name</label>
         <p>{{ current_user.companyName }}</p>
 
-        <button type="submit" value="Edit" class="edit-form__edit-button" > Edit my account</button>
     </form>
+    <a href="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" class="edit-form__edit-button">Edit Account</a>
     {% endif %}
 
 </section>

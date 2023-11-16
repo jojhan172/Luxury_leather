@@ -93,7 +93,7 @@
     <main class="cards-box">
         {% with products = funcion() %}
             {% for product in products  %}
-                <a href="/home" class="product-card">
+                <a href="/view_product/{{product[0]}}" class="product-card">
                     <img src="{{product[4]}}" alt="" class="product-img">
                     <div class="product-info">
                         <div>

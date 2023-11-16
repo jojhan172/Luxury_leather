@@ -1,135 +1,226 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Account</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;700&family=Roboto:wght@700&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --white: #FFFFFF;
-            --black: #000000;
-            --very-light-grey: #c7c7c7;
-            --background-very-light-grey: #f8f8f8;
-            --text-input-field: #F7F7F7;
-            --hospital-green: #ACD9B2;
-            
-            --sm: 1.3rem;
-            --md: 1.5rem;
-            --lg: 1.8rem;
+{% extends './auth/base.html' %}
+    {% block title %}Editar cuenta{% endblock %}
+
+{% block customCSS %}
+<style>
+    section{
+        font-family: 'Quicksand', sans-serif;
+        display: grid;
+        grid-template-rows: 20% 55% 25%;
+        height: 100vh;
+    }
+    .edit-account-box {
+        grid-column: 1/1;
+        grid-row: 1/2;
+
+        display: flex;
+        flex-direction: column;
+
+        top: 5%;
+        padding-left: 3%;
+        height: 95%;
+        width: 100%;   
+    }
+    .tittle {
+        margin-top: 8%;
+        margin-bottom: 40px;
+
+        font-size: var(--lg);
+        text-align: left;
+        
+        font-family: 'Quicksand' ;
+        font-weight: 700;
+    }
+    .main-box__edit-form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    label {
+        font-size: var(--md);
+        font-weight: 700;
+        margin-bottom: 4px
+    }
+    input {
+        background-color: var(--text-input-field);
+        border: none;
+        border-radius: 8px;
+        font-size: var(--md);
+        height: 40px;
+        padding: 6px;
+        margin-bottom: 20px;
+    }
+
+    .edit-form__save-button {
+        position: absolute;
+        bottom: 0px;
+        border: solid 0px;
+        border-radius: 8px;
+        color: var(--white);
+        height: 50px;
+        width: 94%;
+        font-size: var(--lg);
+        font-weight: 500;
+
+        background-color: var(--hospital-green);
+    }
+
+    @media (min-width: 760px) {
+        body {
+            grid-template-columns:37.5% 25% 37.5%;
         }
-        * {
-            box-sizing: border-box;
-            padding: 0px;
-            margin: 0px;
-        }
-        html {
-            font-size: 62.5%;
-        }
-        body{
-            font-family: 'Quicksand', sans-serif;
-            display: grid;
-            grid-template-rows: 20% 55% 25%;
-            height: 100vh;
-        }
+
         .edit-account-box {
-            grid-column: 1/1;
-            grid-row: 1/2;
-
-            display: flex;
-            flex-direction: column;
-
-            top: 5%;
-            padding-left: 3%;
-            height: 95%;
+            grid-column: 2/3;
+            grid-row: 2/3; 
+            padding: 0;
+            top: 50%;
             width: 100%;   
-        }
-        .tittle {
-            margin-top: 8%;
-            margin-bottom: 40px;
-
-            font-size: var(--lg);
-            text-align: left;
-            
-            font-family: 'Quicksand' ;
-            font-weight: 700;
-        }
-        .main-box__edit-form {
-            display: flex;
-            flex-direction: column;
-        }
-
-        label {
-            font-size: var(--md);
-            font-weight: 700;
-            margin-bottom: 4px
-        }
-        input {
-            background-color: var(--text-input-field);
-            border: none;
-            border-radius: 8px;
-            font-size: var(--md);
-            height: 40px;
-            padding: 6px;
-            margin-bottom: 20px;
+            height: 85%;
         }
 
         .edit-form__save-button {
-            position: absolute;
-            bottom: 0px;
-            border: solid 0px;
-            border-radius: 8px;
-            color: var(--white);
-            height: 50px;
-            width: 94%;
-            font-size: var(--lg);
-            font-weight: 500;
+            bottom: 15%;
+            width: 25%;
+            height: 40px;
+            cursor: pointer;
+        } 
+    }
+</style>
+{% endblock %}
 
-            background-color: var(--hospital-green);
-        }
-
-        @media (min-width: 760px) {
-            body {
-                grid-template-columns:37.5% 25% 37.5%;
-            }
-
-            .edit-account-box {
-                grid-column: 2/3;
-                grid-row: 2/3; 
-                padding: 0;
-                top: 50%;
-                width: 100%;   
-                height: 85%;
-            }
-
-            .edit-form__save-button {
-                bottom: 15%;
-                width: 25%;
-                height: 40px;
-                cursor: pointer;
-            } 
-        }
-    </style>
-</head>
-<body>
+{% block body %}
+    {% include 'auth/navbar.html' %}
     <section class="edit-account-box">
-        <h1 class="tittle edit-account-box__tittle">My account</h1>
-        <form action="/" class="edit-form main-box__edit-form">
-            <label for="name-box" class="name-label edit-form__name-label">Name</label>
-            <input type="text" id="name-box" placeholder="Camila Yokoo" class="name-input edit-form__name-input" >
+        <h1 class="tittle edit-account-box__tittle">Edita tu cuenta de luxury lether</h1>
+        {% if current_user.userType == 'seller'%} <!--Forms for seller users-->
+            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
-            <label for="email-box" class="email-label edit-form__email-label">Email addres</label>
-            <input type="email" id="email-box" placeholder="camilayokoo@email.com" class="email-input edit-form__email-input" >
+                <input type="hidden" name="parameter" value="email">
 
-            <label for="password-box" class="password-label edit-form__password-label">Password</label>
-            <input type="password" id="password-box" placeholder="***********" class="password-input edit-form__password-input">
+                <label for="newValue">New email</label>
+                <input type="email" name="newValue">
+                <button type="submit"> Editar Email</button>
+            </form>
+            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
-            <input type="submit" value="Save" class="edit-form__save-button" >
-        </form>
+                <input type="hidden" name="parameter" value="password">
+
+                <label for="newValue">New account password</label>
+                <input type="text" name="newValue">
+                <button type="submit"> Editar contraseña</button>
+            </form>
+            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                <input type="hidden" name="parameter" value="ceoName">
+
+                <label for="newValue">New CEO Name</label>
+                <input type="text" name="newValue">
+                <button type="submit"> Editar Nombre</button>
+            </form>
+            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="parameter" value="companyName">
+
+                <label for="newValue">New company name</label>
+                <input type="text" name="newValue">
+                <button type="submit">Editar nombre de tu tienda</button>
+            </form>
+            <!--DELETE ACCOUNT-->
+            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="parameter" value="DELETE_ACCOUNT">
+                <input type="hidden" name="newValue" value="">
+    
+                <button type="submit">Eliminar cuenta</button>
+            </form>
+
+
+        {% else %} <!--Forms for client users-->
+            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                <input type="hidden" name="parameter" value="email">
+
+                <label for="newValue">New email</label>
+                <input type="email" name="newValue">
+                <button type="submit">Editar email de tu cuenta</button>
+            </form>
+            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                <input type="hidden" name="parameter" value="username">
+
+                <label for="newValue">New username</label>
+                <input type="text" name="newValue">
+                <button type="submit">Editar nombre de usuario</button>
+            </form>
+            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                <input type="hidden" name="parameter" value="fullname">
+
+                <label for="newValue">New fullname</label>
+                <input type="text" name="newValue">
+                <button type="submit">editar nombre</button>
+            </form>
+            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                <input type="hidden" name="parameter" value="password">
+
+                <label for="newValue">New password</label>
+                <input type="text" name="newValue">
+                <button type="submit">Editar contraseña</button>
+            </form>
+            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                <input type="hidden" name="parameter" value="postal_code">
+
+                <label for="newValue">New postal code</label>
+                <input type="text" name="newValue">
+                <button type="submit">Editar codigo postal</button>
+            </form>
+            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                <input type="hidden" name="parameter" value="adress">
+
+                <label for="newValue">New adress</label>
+                <input type="text" name="newValue">
+                <button type="submit">Editar la dirección de entrega de tus paquetes</button>
+            </form>
+            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                <input type="hidden" name="parameter" value="city">
+
+                <label for="newValue">New city</label>
+                <input type="text" name="newValue">
+                <button type="submit">Editar la ciudad de entrega</button>
+            </form>
+            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                <input type="hidden" name="parameter" value="phone">
+
+                <label for="newValue">New phone number</label>
+                <input type="text" name="newValue">
+                <button type="submit">Editar el número de celular</button>
+            </form>
+            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="parameter" value="DELETE_ACCOUNT">
+                <input type="hidden" name="newValue" value="">
+    
+                <button type="submit">Eliminar cuenta</button>
+            </form>
+            
+        {% endif %}
+
     </section>
-</body>
-</html>
+{% endblock %}

@@ -1,6 +1,10 @@
 {% extends './auth/base.html' %}
     {% block title %}My Product{% endblock %}
 
+{% block customCSS %}
+<style>
+</style>
+{% endblock %}
 {% block body %}
     {% include 'auth/navbar.html' %}
     <!-- editProductVariables Variables
@@ -8,25 +12,42 @@
     -->
     {% with product = takeProductById %}
     <section class="main-container">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <h1>Edita tu producto de {{current_user.companyName}}</h1>
-        <form action="/add_new_product/" method="POST" class="create-product-form">
+        <!--Name Edit-->
+        <form action="/edit_product/{{product[0][0]}}" method="POST">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <input type="hidden" value="{{ current_user.id }}" name="userId">
-    
-            <label for="email-box" class="create-product-form__label">Product Name</label>
-            <input type="text" id="email-box" name="productName" placeholder="Nike sb Dunk" class="create-account-form__input" required>
-    
-            <label for="email-box" class="create-product-form__label">Product price (USD$)</label>
-            <input type="number" id="email-box" name="price" placeholder="125,00" class="create-account-form__input" required>
-    
-            <label for="email-box" class="create-product-form__labeld">Url de la imagen</label>
-            <input type="text" id="email-box" name="imgURL" placeholder="https//:image.jpg" class="create-account-form__input" required>
-    
-            <button type="submit" value="Creat product" class="create-product-form__submit">Create Product</button>
+            <input type="hidden" name="parameter" value="name">
+
+            <label for="parameter">Product Name</label>
+            <input type="text" name="newValue">
+            <button type="submit"> Editar Nombre</button>
         </form>
-        {% if current_user.userType == 'seller' %}
-            <a href="/edit_product/{{product[0][0]}}">editar</a>
-        {% endif %}
+        <!--Price edit-->
+        <form action="/edit_product/{{product[0][0]}}" method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="parameter" value="price">
+
+            <label for="parameter">Product price</label>
+            <input type="text" name="newValue">
+            <button type="submit"> Editar precio</button>
+        </form>
+        <!--imgUrl edit-->
+        <form action="/edit_product/{{product[0][0]}}" method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="parameter" value="imgUrl">
+
+            <label for="parameter">Product image URL</label>
+            <input type="text" name="newValue">
+            <button type="submit"> Cambiar imagen</button>
+        </form>
+        <!--DELETE PRODUCT-->
+        <form action="/edit_product/{{product[0][0]}}" method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="parameter" value="DELETE_PRODUCT">
+
+            <button type="submit">Eliminar cuenta</button>
+        </form>
     {% endwith %}
     </section>
 

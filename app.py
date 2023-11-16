@@ -33,7 +33,7 @@ login_manager_app = LoginManager(app)
 
 def takeProducts() -> list:
     cursor = db.cursor()
-    sql = "SELECT * FROM `products` LIMIT 2"
+    sql = "SELECT * FROM `products`"
     cursor.execute(sql)
     row = list(cursor.fetchall())
     return row
@@ -59,12 +59,12 @@ def takeProductsById(productId: str)-> list:
     row = list(cursor.fetchall())
     return row
 
-def editProduct(productId:str) -> list:
+def editProduct(productId:str, parameter:str, newValue:str) -> 0: # with products parameter should be name, imgUrl
     cursor = db.cursor()
-    sql= ""
+    sql= "UPDATE `products` SET `{parameter}` = '{newValue}' WHERE `products`.`id` = '{productId}'".format(parameter= parameter, newValue= newValue ,productId=productId)
     cursor.execute(sql)
     db.commit()
-    return flash("El producto se edito correctamente")
+    return
 
 def takeSellerById(sellerId: str) -> list:
     cursor  = db.cursor()
@@ -72,6 +72,17 @@ def takeSellerById(sellerId: str) -> list:
     cursor.execute(sql)
     row = list(cursor.fetchall())
     return row
+
+def editAccount(userType:str, userId:str, parameter:str, newValue:str) -> 0:
+    cursor = db.cursor()
+    if userType == 'seller':
+        table = 'seller_users'
+    else: 
+        table = 'client_users' 
+    sql = "UPDATE `{table}` SET `{parameter}` = '{newValue}' WHERE `{table}`.`id` = '{userId}'".format(table=table, userId= userId, parameter=parameter, newValue=newValue)
+    cursor.execute(sql)
+    db.commit()
+    return
 
 @login_manager_app.user_loader # this will allow us to mantain our user logged
 def load_user(id):
@@ -187,10 +198,11 @@ def seller_login():
 @app.route('/my_products', methods = ['GET', 'POST'])
 @login_required
 def my_products():
+    message = request.args.get('message', None)
     if request.method == 'POST':
-        return render_template('auth/my_products.html', TakeProducts=takeProductsBySeller)
+        return render_template('auth/my_products.html', TakeProducts=takeProductsBySeller, message=message)
     else:
-        return render_template('auth/my_products.html', TakeProducts=takeProductsBySeller)
+        return render_template('auth/my_products.html', TakeProducts=takeProductsBySeller, message= message)
 
 @app.route('/add_new_product', methods=['GET','POST'])
 def add_new_product():
@@ -207,21 +219,44 @@ def add_new_product():
 def view_my_product(productId):
     return render_template('auth/view_product.html', productId=productId, takeProductById=takeProductsById(productId), takeSellerById=takeSellerById, takeProductsWithLimit=takeProductsWithLimit) # , ,editProduct = editProduct()
 
+@app.route('/edit_product/<productId>', methods = ['GET', 'POST'])
+def edit_Product(productId):
+    if request.method == 'POST':
+        parameter = request.form['parameter']
+        if parameter == "DELETE_PRODUCT":
+            print("Eliminado Correctamete")
+            return(redirect(url_for('my_products', message= "Producto elimiado correctamente")))
+        else:
+            newValue = request.form['newValue']
+            editProduct(productId, parameter, newValue)
+            flash("Producto editado correctamete")
+            print("editado correctamente")
+            return render_template('auth/edit_product.html', takeProductById = takeProductsById(productId))
+    else: 
+        return render_template('auth/edit_product.html', takeProductById = takeProductsById(productId))
+
 @app.route('/my_account', methods = ['GET', 'POST'])
 @login_required
 def my_account():
-    return render_template('auth/my_account.html')
+    if request.method == 'POST':
+        return (redirect(url_for('my_account_edit')))
+    else: 
+        return render_template('auth/my_account.html')
 
-@app.route('/my_account_edit', methods = ['GET', 'POST'])
-def my_account_edit():
-    return render_template('auth/my_account_edit.html')
-
-@app.route('/edit_product/<productId>')
-def edit_Product(productId):
-    # La idea aqui es que el programa reciba el product ID desde la pagina web y con eso
-    # porderlo sacar de la base de datos para denrerizarlo
-    return render_template('auth/edit_product.html', takeProductById = takeProductsById(productId))
-
+@app.route('/my_account_edit/<userType>/<userId>', methods = ['GET', 'POST'])
+def my_account_edit(userType, userId):
+    if request.method == 'POST':
+        parameter = request.form['parameter']
+        if parameter == "DELETE_ACCOUNT":
+            print("Eliminado Correctamente")
+            return(redirect(url_for('register_user_select')))
+        else:
+            newValue = request.form['newValue']
+            editAccount(userType, userId, parameter, newValue)
+            flash("Cuenta editada exitosamente")
+            return render_template('auth/my_account_edit.html')
+    else:
+        return render_template('auth/my_account_edit.html')
 
 @app.route('/logout')
 def logout():

@@ -178,7 +178,7 @@
         <a href="/" class="product-info__company">{{seller[0][4]}}</a>
         <p class="product-info__desc">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi odit itaque deserunt sapiente sit ullam in vitae non pariatur quibusdam a corporis cumque, magnam veritatis molestias dolores ab ipsum voluptates?</p>
         <!--company name-->
-        {% if current_user.userType == 'seller' %}
+        {% if (current_user.userType == 'seller') and (current_user.companyName == seller[0][4]) %}
         <div class="edit-product-button">
             <a href="/edit_product/{{product[0][0]}}" >edit product</a>
         </div>
