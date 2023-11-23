@@ -189,6 +189,7 @@ def edit_Product(productId):
         parameter = request.form['parameter']
         if parameter == "DELETE_PRODUCT":
             Product.deleteProduct(db, productId)
+            Product.deleteProductFromCartSeller(db, productId)
             print("Eliminado Correctamete")
             return(redirect(url_for('my_products', message= "Producto elimiado correctamente")))
         else:

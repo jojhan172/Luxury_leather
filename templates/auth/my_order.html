@@ -175,14 +175,12 @@
                 <div class="my-order__container">
                     <div class="order-container__content">
                         <p>
-                            <span>
-                                {{productTaked[0][1]}}
-                            </span>
+                            <span>{{productTaked[0][1]}}</span>
                             <span>Spected date</span>
                         </p>
-                        <p>$  USD</p>
+                        <p>$ {{productTaked[0][2]}} USD</p>
                     </div>
-                    <form action="/view_cart/{{current_user.id}}/Null" class="" method="POST">
+                    <form action="/view_cart/{{current_user.id}}/{{productTaked[0][0]}}" class="" method="POST">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="action" value="deleteProduct">
                         <button type="submit" class="edit-product-button"><img src="../../static/icons/trashCan.svg" alt=""></button>

@@ -96,6 +96,15 @@ class Product():
         return
     
     @classmethod
+    def deleteProductFromCartSeller(self, db, productId):
+        cursor = db.cursor()
+        sql = "DELETE FROM cart_products WHERE `cart_products`.`productId` = '{productId}'".format(productId=productId)
+        cursor.execute(sql)
+        db.commit
+        return
+
+    
+    @classmethod
     def addToCart(self, db, productId, sellerId, clientId, productPrice)->0:
     #id, productId, sellerId, clientId, productPrice, deliveryDate
         orderId = uuid.uuid4()
