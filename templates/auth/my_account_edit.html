@@ -3,30 +3,60 @@
 
 {% block customCSS %}
 <style>
-    section{
-        font-family: 'Quicksand', sans-serif;
+    main{
         display: grid;
-        grid-template-rows: 20% 55% 25%;
-        height: 100vh;
+        grid-template-columns: 1fr 0.8fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     }
-    .edit-account-box {
-        grid-column: 1/1;
-        grid-row: 1/2;
 
+    section{
+        grid-column: 2/3;
         display: flex;
         flex-direction: column;
-
-        top: 5%;
-        padding-left: 3%;
-        height: 95%;
-        width: 100%;   
+        gap: 20px;
+        
     }
+
+    .form-container{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .form-container .edit{
+        font-family: var(--font);
+        padding: 4px;
+        color: var(--very-light-grey);
+        cursor: pointer;
+        border: none;
+        background: none;
+        box-shadow: none;
+    }
+
+    .delete-button{
+        display: inline;
+        border-radius: 8px;
+        
+        height: 50px;
+        width: 100%;
+
+        background-color: var(--danger-zone);
+        border-color: var(--black);
+        border-style: 5px;
+    }
+
+    .form-left,
+    .form-right{
+        display: flex;
+        flex-direction: column;
+    }
+
     .tittle {
         margin-top: 8%;
         margin-bottom: 40px;
 
         font-size: var(--lg);
-        text-align: left;
+        text-align: center;
         
         font-family: 'Quicksand' ;
         font-weight: 700;
@@ -51,176 +81,174 @@
         margin-bottom: 20px;
     }
 
-    .edit-form__save-button {
-        position: absolute;
-        bottom: 0px;
-        border: solid 0px;
-        border-radius: 8px;
-        color: var(--white);
-        height: 50px;
-        width: 94%;
-        font-size: var(--lg);
-        font-weight: 500;
-
-        background-color: var(--hospital-green);
-    }
 
     @media (min-width: 760px) {
-        body {
-            grid-template-columns:37.5% 25% 37.5%;
-        }
 
-        .edit-account-box {
-            grid-column: 2/3;
-            grid-row: 2/3; 
-            padding: 0;
-            top: 50%;
-            width: 100%;   
-            height: 85%;
-        }
-
-        .edit-form__save-button {
-            bottom: 15%;
-            width: 25%;
-            height: 40px;
-            cursor: pointer;
-        } 
     }
 </style>
 {% endblock %}
 
 {% block body %}
     {% include 'auth/navbar.html' %}
-    <section class="edit-account-box">
+    <main class="edit-account-box">
+        <section>
         <h1 class="tittle edit-account-box__tittle">Edita tu cuenta de luxury lether</h1>
         {% if current_user.userType == 'seller'%} <!--Forms for seller users-->
-            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST">
+            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST" class="form-container">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-
                 <input type="hidden" name="parameter" value="email">
-
-                <label for="newValue">New email</label>
-                <input type="email" name="newValue">
-                <button type="submit"> Editar Email</button>
+                <div class="form-left">
+                    <label for="newValue">New email</label>
+                    <input type="email" name="newValue" placeholder="{{current_user.email}}">
+                </div>
+                <div class="form-right">
+                    <button type="submit" class="edit">Confirmar</button>
+                </div>
             </form>
-            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST">
+            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST" class="form-container">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-
                 <input type="hidden" name="parameter" value="password">
-
-                <label for="newValue">New account password</label>
-                <input type="text" name="newValue">
-                <button type="submit"> Editar contraseña</button>
+                <div class="form-left">
+                    <label for="newValue">New account password</label>
+                    <input type="text" name="newValue" placeholder="*********">
+                </div>
+                <div class="form-right">
+                    <button type="submit" class="edit">Confirmar</button>
+                </div>
             </form>
-            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST">
+            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST" class="form-container">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-
                 <input type="hidden" name="parameter" value="ceoName">
-
-                <label for="newValue">New CEO Name</label>
-                <input type="text" name="newValue">
-                <button type="submit"> Editar Nombre</button>
+                <div class="form-left">
+                    <label for="newValue">New CEO Name</label>
+                    <input type="text" name="newValue" placeholder="{{current_user.ceoName}}">
+                </div>
+                <div class="form-right">
+                    <button type="submit" class="edit">Confirmar</button>
+                </div>
             </form>
-            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST">
+            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST" class="form-container">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="parameter" value="companyName">
-
-                <label for="newValue">New company name</label>
-                <input type="text" name="newValue">
-                <button type="submit">Editar nombre de tu tienda</button>
+                <div class="form-left">
+                    <label for="newValue">New company name</label>
+                    <input type="text" name="newValue" placeholder="{{current_user.companyName}}">
+                </div>
+                <div class="form-right">
+                    <button type="submit" class="edit">Confirmar</button>
+                </div>
             </form>
             <!--DELETE ACCOUNT-->
-            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST">
+            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST" >
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="parameter" value="DELETE_ACCOUNT">
                 <input type="hidden" name="newValue" value="">
-    
-                <button type="submit">Eliminar cuenta</button>
+
+                <button type="submit" class="delete-button">Eliminar cuenta</button>
             </form>
 
 
         {% else %} <!--Forms for client users-->
-            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST">
+            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST" class="form-container">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-
                 <input type="hidden" name="parameter" value="email">
+                
+                <div class="form-left">
 
-                <label for="newValue">New email</label>
-                <input type="email" name="newValue">
-                <button type="submit">Editar email de tu cuenta</button>
+                    <label for="newValue">New email</label>
+                    <input type="email" name="newValue" placeholder="{{current_user.email}}">
+                </div>
+                <div class="form-right">
+                    <button type="submit" class="edit">Confirmar</button>
+                </div>
             </form>
-            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST">
+            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST" class="form-container">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-
                 <input type="hidden" name="parameter" value="username">
-
-                <label for="newValue">New username</label>
-                <input type="text" name="newValue">
-                <button type="submit">Editar nombre de usuario</button>
+                <div class="form-left">
+                    <label for="newValue">New username</label>
+                    <input type="text" name="newValue" placeholder="{{current_user.username}}" >
+                </div>
+                <div class="form-right">
+                    <button type="submit" class="edit">Confirmar</button>
+                </div>
             </form>
-            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST">
+            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST" class="form-container">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-
                 <input type="hidden" name="parameter" value="fullname">
-
-                <label for="newValue">New fullname</label>
-                <input type="text" name="newValue">
-                <button type="submit">editar nombre</button>
+                <div class="form-left">
+                    <label for="newValue">New fullname</label>
+                    <input type="text" name="newValue" placeholder="{{current_user.fullname}}">
+                </div>
+                <div class="form-right">
+                    <button type="submit" class="edit">Confirmar</button>
+                </div>
             </form>
-            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST">
+            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST" class="form-container">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-
                 <input type="hidden" name="parameter" value="password">
-
-                <label for="newValue">New password</label>
-                <input type="text" name="newValue">
-                <button type="submit">Editar contraseña</button>
+                <div class="form-left">
+                    <label for="newValue">New password</label>
+                    <input type="text" name="newValue" placeholder="***********">
+                </div>
+                <div class="form-right">
+                    <button type="submit" class="edit">Confirmar</button>
+                </div>
             </form>
-            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST">
+            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST" class="form-container">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-
                 <input type="hidden" name="parameter" value="postal_code">
-
-                <label for="newValue">New postal code</label>
-                <input type="text" name="newValue">
-                <button type="submit">Editar codigo postal</button>
+                <div class="form-left">
+                    <label for="newValue">New postal code</label>
+                    <input type="text" name="newValue" placeholder="{{current_user.postal_code}}">
+                </div>
+                <div class="form-right" >
+                    <button type="submit" class="edit">Confirmar</button>
+                </div>
             </form>
-            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST">
+            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST" class="form-container"> 
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-
                 <input type="hidden" name="parameter" value="adress">
-
-                <label for="newValue">New adress</label>
-                <input type="text" name="newValue">
-                <button type="submit">Editar la dirección de entrega de tus paquetes</button>
+                <div class="form-left">
+                    <label for="newValue">New adress</label>
+                    <input type="text" name="newValue" placeholder="{{current_user.adress}}">
+                </div>
+                <div class="form-right">
+                    <button type="submit" class="edit">Confirmar</button>
+                </div>
             </form>
-            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST">
+            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST" class="form-container">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-
                 <input type="hidden" name="parameter" value="city">
-
-                <label for="newValue">New city</label>
-                <input type="text" name="newValue">
-                <button type="submit">Editar la ciudad de entrega</button>
+                <div class="form-left">
+                    <label for="newValue">New city</label>
+                    <input type="text" name="newValue" placeholder="{{current_user.city}}">
+                </div>
+                <div class="form-right">
+                    <button type="submit" class="edit">Confirmar</button>
+                </div>
             </form>
-            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST">
+            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST" class="form-container">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-
                 <input type="hidden" name="parameter" value="phone">
-
-                <label for="newValue">New phone number</label>
-                <input type="text" name="newValue">
-                <button type="submit">Editar el número de celular</button>
+                <div class="form-left">
+                    <label for="newValue">New phone number</label>
+                    <input type="text" name="newValue" placeholder="{{current_user.phone}}">
+                </div>
+                <div class="form-right">
+                    <button type="submit" class="edit">Confirmar</button>
+                </div>
             </form>
-            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST">
+            <!--DELETE ACCOUNT-->
+            <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST" class="form-container">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="parameter" value="DELETE_ACCOUNT">
                 <input type="hidden" name="newValue" value="">
     
-                <button type="submit">Eliminar cuenta</button>
+                <button type="submit" class="delete-button">Eliminar cuenta</button>
             </form>
             
         {% endif %}
-
-    </section>
+        </section>
+    </main>
 {% endblock %}

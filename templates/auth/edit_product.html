@@ -3,52 +3,137 @@
 
 {% block customCSS %}
 <style>
+    .main-container{
+        display: grid;
+        grid-template-columns: 1fr 0.8fr 1fr;
+        grid-template-rows: 0.5fr 1fr 0.5fr ;
+    }
+    .box-inputs{
+        grid-column: 2/3;
+        grid-row: 2/3;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+    }
+
+    .box-inputs h1{
+        align-self: center;
+        font-size: var(--lg);
+    }
+
+    form{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        
+    }
+
+    .form-left,
+    .form-right{
+        
+        display: flex;
+        flex-direction: column;
+    }
+
+    label {
+        font-size: var(--md);
+        font-weight: 700;
+        margin-bottom: 4px
+    }
+    input {
+        background-color: var(--text-input-field);
+        border: none;
+        border-radius: 8px;
+        font-size: var(--md);
+        height: 40px;
+        width: 80%;
+        padding: 6px;
+        margin-bottom: 20px;
+    }
+
+    .form-left{
+        width: 80%;
+    }
+    .form-right{
+        width: 20%;    
+    }
+    .form-right .edit{
+        font-family: var(--font);
+        
+        color: var(--very-light-grey);
+        cursor: pointer;
+        border: none;
+        background: none;
+        box-shadow: none;
+    }
+    .delete-button{
+        display: inline;
+        border-radius: 8px;
+        
+        height: 50px;
+        width: 100%;
+
+        background-color: var(--danger-zone);
+        border-color: var(--black);
+        border-style: 5px;
+    }
 </style>
 {% endblock %}
 {% block body %}
     {% include 'auth/navbar.html' %}
     <!-- editProductVariables Variables
-
     -->
-    {% with product = takeProductById %}
-    <section class="main-container">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-        <h1>Edita tu producto de {{current_user.companyName}}</h1>
-        <!--Name Edit-->
-        <form action="/edit_product/{{product[0][0]}}" method="POST">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <input type="hidden" name="parameter" value="name">
-
-            <label for="parameter">Product Name</label>
-            <input type="text" name="newValue">
-            <button type="submit"> Editar Nombre</button>
-        </form>
-        <!--Price edit-->
-        <form action="/edit_product/{{product[0][0]}}" method="POST">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <input type="hidden" name="parameter" value="price">
-
-            <label for="parameter">Product price</label>
-            <input type="text" name="newValue">
-            <button type="submit"> Editar precio</button>
-        </form>
-        <!--imgUrl edit-->
-        <form action="/edit_product/{{product[0][0]}}" method="POST">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <input type="hidden" name="parameter" value="imgUrl">
-
-            <label for="parameter">Product image URL</label>
-            <input type="text" name="newValue">
-            <button type="submit"> Cambiar imagen</button>
-        </form>
-        <!--DELETE PRODUCT-->
-        <form action="/edit_product/{{product[0][0]}}" method="POST">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <input type="hidden" name="parameter" value="DELETE_PRODUCT">
-
-            <button type="submit">Eliminar cuenta</button>
-        </form>
-    {% endwith %}
-    </section>
+    <main class="main-container">
+        {% with product = takeProductById %}
+        <section class="box-inputs">
+            <h1>Edita tu producto de {{current_user.companyName}}</h1>
+            <!--Name Edit-->
+            <form action="/edit_product/{{product[0][0]}}" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="parameter" value="name">
+                <div class="form-left">
+                    <label for="parameter">Product Name</label>
+                    <input type="text" name="newValue" placeholder="{{product[0][1]}}">
+                </div>
+                <div class="form-right">
+                    <button type="submit" class="edit"> Editar Nombre</button>
+                </div>
+            </form>
+            <!--Price edit-->
+            <form action="/edit_product/{{product[0][0]}}" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="parameter" value="price">
+                <div class="form-left">
+                    <label for="parameter">Product price</label>
+                    <input type="text" name="newValue" placeholder="{{product[0][2]}} USD">
+                </div>
+                <div class="form-right">
+                    <button type="submit" class="edit"> Editar precio</button>
+                </div>
+            </form>
+            <!--imgUrl edit-->
+            <form action="/edit_product/{{product[0][0]}}" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="parameter" value="imgUrl">
+                <div class="form-left">
+                    <label for="parameter">Product image URL</label>
+                    <input type="text" name="newValue" placeholder="https//:url.com/img.jpg">
+                </div>
+                <div class="form-right">
+                    <button type="submit" class="edit"> Cambiar imagen</button>
+                </div>
+            </form>
+            <!--DELETE PRODUCT-->
+            <form action="/edit_product/{{product[0][0]}}" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="parameter" value="DELETE_PRODUCT">
+    
+                <button type="submit" class="delete-button">Delete  product</button>
+            </form>
+        {% endwith %}
+        </section>
+    </main>
 
 {% endblock %}

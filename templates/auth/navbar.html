@@ -16,7 +16,9 @@
     <nav>
         <img src="../static/icons/icon_menu.svg" alt="menu" class="icon-menu">
         <div class="navbar-left">
-            <img src="../../static/luxuryLeatherLogoPack/svg/logo-no-background.svg" alt="logo" class="logo">
+            <a href="/home">
+                <img src="../../static/luxuryLeatherLogoPack/svg/logo-no-background.svg" alt="logo" class="logo">
+            </a>
             <ul>
                 <li><a href="/home">All</a></li>
                 <li><a href="/">Clothes</a></li>
@@ -32,16 +34,20 @@
                 <li class="navbar__toggle">
                     <img src="../../static/icons/flechita.svg" alt="">
                 </li>
+                {% if current_user.userType == 'client' %}
                 <li class="navbar__shopping-cart">
-                    <img src="../../static/icons/icon_shopping_cart_notification.svg" alt="">
+                    <a href="/view_cart/{{current_user.id}}/Null">
+                        <img src="../../static/icons/icon_shopping_cart_notification.svg" alt="">
+                    </a>
                 </li>
+                {% endif %}
             </ul>
         </div>
         <div class="desktop-menu inactive">
             <ul>
                 <li>
                     {% if current_user.userType == "client" %}
-                        <a href="/" class="tittle">My orders</a>
+                        <a href="/view_cart/{{current_user.id}}/Null" class="tittle">View Cart</a>
                     {% else %}
                         <a href="/my_products">My Products</a>
                     {% endif %}

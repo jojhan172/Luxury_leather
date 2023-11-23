@@ -1,220 +1,207 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My order</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;700&family=Roboto:wght@700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --white: #FFFFFF;
-            --black: #000000;
-            --very-light-grey: #818181;
-            --background-very-light-grey: #f8f8f8;
-            --text-input-field: #F7F7F7;
-            --hospital-green: #ACD9B2;
-            
-            --sm: 1.3rem;
-            --md: 1.5rem;
-            --lg: 1.8rem;
-        }
-        * {
-            box-sizing: border-box;
-            padding: 0px;
-            margin: 0px;
-            
-        }
-        html {
-            font-size: 62.5%;
-        }
+{% extends './auth/base.html' %}
+    {% block title %} My cart {% endblock %}
 
-        body{
-            font-family: 'Quicksand', sans-serif;
-        }
+{% block customCSS %}
+<style>
+    .tittle {
+        display: none;
+    }
 
+    .my-order {
+        margin-top:16px ;
+        display: grid;
+        grid-template-rows: 10% auto;
+        
+        justify-items: center;
+        width: 100%;
+        height: 100vh;
+    }
+    .my-order__container {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        width: 92%;
+        margin-bottom: 24px;
+        height: 12vh;
+        padding: 8px;
+        border-radius: 12px;
+
+        background-color: var(--text-input-field);
+    }
+
+    .my-order__container img{
+        width: 28px;
+    }
+    .order-container__content {
+        display: flex;
+        flex-direction: row;
+        position: relative;
+
+        width: 100%;
+        height: 100%;
+    }
+
+    .order-container__content p span:nth-child(1){
+        position: absolute;
+        top: 20%;
+
+        color: var(--black);
+        font-weight: bold;
+        font-size: var(--lg);
+    }
+
+    .order-container__content p span:nth-child(2) {
+        position: absolute;
+        bottom: 1%;
+        
+        color: var(--very-light-grey);
+        font-size: var(--md);
+    }
+
+    .order-container__content p:nth-child(2) {
+        position: absolute;
+        top: 33%;
+        right: 0;
+
+        color: var(--black);
+        font-size: var(--md);
+        font-weight: bold;
+    }
+
+    .totalPrice{
+        color: var(--black);
+        font-weight: bold;
+        font-size: var(--lg);
+    }
+
+    .my-order__shopping-cart {
+        width: 92%;
+        height: auto;
+        padding-top: 8%;
+    }
+    .cart__item-container {
+        width: 100%;
+        display: flex;
+        position: relative;
+        align-items: center;   
+        margin-bottom: 16px;   
+    }
+
+    
+
+    .cart__item-container figure img {
+        object-fit: cover;
+        width: 70px;
+        height: 70px;
+        border-radius: 20px;
+    }
+
+    .cart__item-container p:nth-child(2) {
+        position: absolute;
+        left: 80px;
+        margin-right: 8px;
+
+        font-size: var(--md);
+        color: var(--very-light-grey);
+    }
+
+    .cart__item-container p:nth-child(3) {
+        position: absolute;
+        right: 0;
+        color: var(--black);
+        font-size: var(--md);
+        font-weight: bold;  
+    }
+
+    .paymentBox button{
+        position: relative;
+        left: 28px;
+
+
+        display: grid;
+        place-items: center;
+        height: 100vh;
+
+        text-align: center;
+        margin-top: 4px;
+        width: 36%;
+        height: 50px;
+        border-radius: 15px;
+
+        background-color: var(--hospital-green);
+        color: var(--white);
+        font-size: var(--md);
+        font-weight: bold;
+
+        cursor: pointer;
+    }
+
+    @media (min-width: 760px) {
         .tittle {
-            display: none;
+            display: unset;
+            font-size: var(--lg);
+            
+        
+            font-family: 'Quicksand' ;
+            font-weight: 700;
         }
-
         .my-order {
-            margin-top:16px ;
+            margin-top: 80px;
             display: grid;
             grid-template-rows: 10% auto;
-            
+            position: absolute;
+            left: 32.5%;
             justify-items: center;
-            width: 100%;
-            height: 100vh;
-        }
-        .my-order__container {
-            width: 92%;
-            height: 12vh;
-            padding: 8px;
-            border-radius: 12px;
-
-            background-color: var(--text-input-field);
-        }
-        .order-container__content {
-            display: flex;
-            flex-direction: row;
-            position: relative;
-
-            width: 100%;
-            height: 100%;
-        }
-
-        .order-container__content p span:nth-child(1){
-            position: absolute;
-            top: 20%;
-
-            color: var(--black);
-            font-weight: bold;
-            font-size: var(--lg);
-        }
-
-        .order-container__content p span:nth-child(2) {
-            position: absolute;
-            bottom: 1%;
-            
-            color: var(--very-light-grey);
-            font-size: var(--md);
-        }
-
-        .order-container__content p:nth-child(2) {
-            position: absolute;
-            top: 33%;
-            right: 0;
-
-            color: var(--black);
-            font-size: var(--md);
-            font-weight: bold;
-        }
-
-        .my-order__shopping-cart {
-            width: 92%;
+            width: 35%;
             height: auto;
-            padding-top: 8%;
         }
-        .cart__item-container {
-            width: 100%;
-            display: flex;
-            position: relative;
-            align-items: center;   
-            margin-bottom: 16px;   
+        .my-order>p {
+            justify-self: left;
+            margin-left: 8px ;
         }
+    }
 
+</style>
+{% endblock %}
+{% block body %}
+    {% include 'auth/navbar.html' %}
+<main class="my-order">
+    <p class="tittle">My order</p>
+    {% with order = takeOrderByClientId(db, current_user.id) %}
+    {% with totalPrice = totalPrice(current_user.id)%}
         
-
-        .cart__item-container figure img {
-            object-fit: cover;
-            width: 70px;
-            height: 70px;
-            border-radius: 20px;
-        }
-
-        .cart__item-container p:nth-child(2) {
-            position: absolute;
-            left: 80px;
-            margin-right: 8px;
-
-            font-size: var(--md);
-            color: var(--very-light-grey);
-        }
-
-        .cart__item-container p:nth-child(3) {
-            position: absolute;
-            right: 0;
-            color: var(--black);
-            font-size: var(--md);
-            font-weight: bold;  
-        }
-
-        @media (min-width: 760px) {
-            .tittle {
-                display: unset;
-                font-size: var(--lg);
-                
-            
-                font-family: 'Quicksand' ;
-                font-weight: 700;
-            }
-            .my-order {
-                margin-top: 80px;
-                display: grid;
-                grid-template-rows: 10% auto;
-                position: absolute;
-                left: 32.5%;
-                justify-items: center;
-                width: 35%;
-                height: auto;
-            }
-            .my-order>p {
-                justify-self: left;
-                margin-left: 8px ;
-            }
-        }
-
-    </style>
-</head>
-<body>
-    <div class="my-order">
-        <p class="tittle">My order</p>
-        <div class="my-order__container">
-            <div class="order-container__content">
-                <p>
-                    <span>11.03.2023</span>
-                    <span>6 articles</span>
-                </p>
-                <p>$ 560,00</p>
-            </div>
+        {% for product in order %}
+            {% with productTaked = takeProductsById(db, product[1]) %} 
+                <div class="my-order__container">
+                    <div class="order-container__content">
+                        <p>
+                            <span>
+                                {{productTaked[0][1]}}
+                            </span>
+                            <span>Spected date</span>
+                        </p>
+                        <p>$  USD</p>
+                    </div>
+                    <form action="/view_cart/{{current_user.id}}/Null" class="" method="POST">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="action" value="deleteProduct">
+                        <button type="submit" class="edit-product-button"><img src="../../static/icons/trashCan.svg" alt=""></button>
+                    </form>
+                </div>
+            {% endwith %}
+        {% endfor %}
+        <div class="paymentBox">
+            <p class="totalPrice">Total Price: {{totalPrice}} USD</p>
+            <form action="/view_cart/{{current_user.id}}/Null" class="" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="action" value="pay">
+                <button type="submit" class="edit-product-button">Pay</button>
+            </form>
         </div>
-        <div class="my-order__shopping-cart">
-            <div class="cart__item-container">
-                <figure>
-                    <img src="https://i.imgur.com/0StWgL6.jpg" alt="">
-                </figure>
-                <p>Miata UwU</p>
-                <p>$ 120,00</p>
-            </div>
-            <div class="cart__item-container">
-                <figure>
-                    <img src="https://i.imgur.com/0StWgL6.jpg" alt="">
-                </figure>
-                <p>Miata UwU</p>
-                <p>$ 120,00</p>
-            </div>
-            <div class="cart__item-container">
-                <figure>
-                    <img src="https://i.imgur.com/0StWgL6.jpg" alt="">
-                </figure>
-                <p>Miata UwU</p>
-                <p>$ 120,00</p>
-            </div>
-            <div class="cart__item-container">
-                <figure>
-                    <img src="https://i.imgur.com/0StWgL6.jpg" alt="">
-                </figure>
-                <p>Miata UwU</p>
-                <p>$ 120,00</p>
-            </div>
-            <div class="cart__item-container">
-                <figure>
-                    <img src="https://i.imgur.com/0StWgL6.jpg" alt="">
-                </figure>
-                <p>Miata UwU</p>
-                <p>$ 120,00</p>
-            </div>
-            <div class="cart__item-container">
-                <figure>
-                    <img src="https://i.imgur.com/0StWgL6.jpg" alt="">
-                </figure>
-                <p>Miata UwU</p>
-                <p>$ 120,00</p>
-            </div>
-        </div>
-
-    </div>
-</body>
-</html>
+    {% endwith %}
+    {% endwith %}
+    
+    
+</main>
+    
+{% endblock %}

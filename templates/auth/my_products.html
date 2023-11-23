@@ -116,9 +116,9 @@
         {% endif %}
     </header>
     <main class="cards-box">
-        {% with products = TakeProducts(current_user.id) %}
+        {% with products = TakeProducts(db, current_user.id) %}
             {% for product in products  %}
-                <a href="/view_product/{{product[0]}}/" class="product-card">
+                <a href="/view_product/{{product[0]}}/Null" class="product-card">
                     <img src="{{product[4]}}" alt="" class="product-img">
                     <div class="product-info">
                         <div>

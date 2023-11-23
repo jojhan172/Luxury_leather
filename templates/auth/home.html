@@ -13,10 +13,16 @@
             margin-top: 2em;
             align-self: center;
         }
+        a{
+            text-decoration: none;
+        }
     /* Main grid -> items grid */
         .cards-box {
+            margin-left: 8%;
+            margin-right: 8%;
             margin-top: 1em;
             gap: 20px;
+            margin-bottom: 3em;
 
             display: grid;
             grid-template-columns: repeat(auto-fill, 140px);
@@ -35,9 +41,7 @@
 
             
         }
-
-        
-        
+  
         .product-info {
             display: flex;
             margin-top: 8px;
@@ -91,9 +95,13 @@
         <h1>Bienvenido a Luxury Leather!</h1> <!-- De esta forma copiamos todo lo que tiene navbar -->
     </header>
     <main class="cards-box">
-        {% with products = funcion() %}
+        {% with products = funcion %}
             {% for product in products  %}
-                <a href="/view_product/{{product[0]}}" class="product-card">
+                {% if current_user.userType == seller %}
+                    <a href="/view_product/{{product[0]}}/Null" class="product-card">
+                {% else %}
+                    <a href="/view_product/{{product[0]}}/{{current_user.id}}" class="product-card">
+                {% endif %}
                     <img src="{{product[4]}}" alt="" class="product-img">
                     <div class="product-info">
                         <div>
@@ -104,7 +112,6 @@
                             <img src="../../static/icons/bt_add_to_cart.svg" alt="">
                         </figure>
                     </div>
-                    
                 </a> <!-- Esto es una lista por la forma que creamos la función asi que podemos recorrer cada producto -->
             {% endfor %}
         {% endwith %}

@@ -54,21 +54,25 @@
     }
 
     .edit-form__edit-button {
+        text-decoration: none;
+
         position: relative;
 
         bottom: 16px;
+        padding: 4px;
+        text-align: center;
 
         height: 50px;
         width: 100%;
         border: solid 2px;
         border-radius: 8px;
         
-        color: var(--hospital-green);
+        color: var(--black);
         font-size: var(--lg);
         font-weight: 500;
         
         border-color: var(--hospital-green);
-        background-color: var(--white);
+        background-color: var(--hospital-green);
 
     }
 
@@ -99,6 +103,7 @@
 {% endblock %}
 
 {% block body %}
+
 <section class="edit-account-box">
     
     {% if current_user.userType == 'client' %}

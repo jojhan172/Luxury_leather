@@ -146,7 +146,7 @@
 </header>
 <main>
     {% with product = takeProductById %}
-    {% with seller = takeSellerById(product[0][3]) %}
+    {% with seller = takeSellerById(db, product[0][3]) %}
     
 
     <!-- my_product Variables
@@ -182,16 +182,23 @@
         <div class="edit-product-button">
             <a href="/edit_product/{{product[0][0]}}" >edit product</a>
         </div>
+        {% elif (current_user.userType == 'client' ) %}
+        <form action="/view_product/{{product[0][0]}}/{{current_user.id}}" class="" method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="addToCart" value="addToCart">
+            <button type="submit" class="edit-product-button">Añadir al carrito</button>
+            
+        </form>
         {% endif %}
     </section>
     
 
     <aside class="recommended">
         <!---->
-        {% with otherProducts = takeProductsWithLimit(10) %} <!--This int int he function is the max num of products we want to see in the page-->
+        {% with otherProducts = takeProductsWithLimit %} <!--This int int he function is the max num of products we want to see in the page-->
             {% for item in otherProducts  %}
                 {% if item[0] != product[0][0] %}
-                <a href="/view_product/{{item[0]}}/" class="recommended__product-box">
+                <a href="/view_product/{{item[0]}}/{{current_user.id}}" class="recommended__product-box">
                     <div class="product-box__img-container">
                         <img src="{{item[4]}}" alt="{{item[1]}}">
                     </div>
@@ -204,8 +211,7 @@
                 {% endif %}
             {% endfor %}
         {% endwith %}
-        {% if current_user.userType == 'client' %}
-        {% endif %}
+        
     </aside>
     
 

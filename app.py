@@ -14,7 +14,7 @@ from models.ModelUser import ModelUser
 from models.Product import Product
 
 # Entities
-from models.entities.User import Client, Seller
+from models.entities.User import Client, Seller, User
 
 app = Flask(__name__)
 
@@ -31,58 +31,13 @@ db = mysql.connector.connect(
 # Our way to mantain a user logged, LoginManger allows lots of things but we use just one, user_loader
 login_manager_app = LoginManager(app) 
 
-def takeProducts() -> list:
-    cursor = db.cursor()
-    sql = "SELECT * FROM `products`"
-    cursor.execute(sql)
-    row = list(cursor.fetchall())
-    return row
-
-def takeProductsWithLimit(limit: int) -> list:
-    cursor = db.cursor()
-    sql = "SELECT * FROM `products` LIMIT {}".format(limit)
-    cursor.execute(sql)
-    row = list(cursor.fetchall())
-    return row
-
-def takeProductsBySeller(sellerId:str) -> list:
-    cursor = db.cursor() 
-    sql = "SELECT * FROM `products` WHERE `sellerId` LIKE '{}'".format(sellerId)
-    cursor.execute(sql)
-    row = list(cursor.fetchall())
-    return row
-
-def takeProductsById(productId: str)-> list:
-    cursor = db.cursor() 
-    sql = "SELECT * FROM `products` WHERE `id` LIKE '{}'".format(productId)
-    cursor.execute(sql)
-    row = list(cursor.fetchall())
-    return row
-
-def editProduct(productId:str, parameter:str, newValue:str) -> 0: # with products parameter should be name, imgUrl
-    cursor = db.cursor()
-    sql= "UPDATE `products` SET `{parameter}` = '{newValue}' WHERE `products`.`id` = '{productId}'".format(parameter= parameter, newValue= newValue ,productId=productId)
-    cursor.execute(sql)
-    db.commit()
-    return
-
-def takeSellerById(sellerId: str) -> list:
-    cursor  = db.cursor()
-    sql = "SELECT * FROM `seller_users` WHERE `id` Like '{}'".format(sellerId)
-    cursor.execute(sql)
-    row = list(cursor.fetchall())
-    return row
-
-def editAccount(userType:str, userId:str, parameter:str, newValue:str) -> 0:
-    cursor = db.cursor()
-    if userType == 'seller':
-        table = 'seller_users'
-    else: 
-        table = 'client_users' 
-    sql = "UPDATE `{table}` SET `{parameter}` = '{newValue}' WHERE `{table}`.`id` = '{userId}'".format(table=table, userId= userId, parameter=parameter, newValue=newValue)
-    cursor.execute(sql)
-    db.commit()
-    return
+def getTotalPrice(clientId:str) -> float:
+    products = Client.takeOrderByClientId(db, clientId)
+    list(products)
+    totalPrice = 0
+    for product in products:
+        totalPrice += int(product[4]) 
+    return totalPrice
 
 @login_manager_app.user_loader # this will allow us to mantain our user logged
 def load_user(id):
@@ -96,7 +51,8 @@ def index():
 
 @app.route('/home', methods = ['GET', 'POST'])
 def home():
-    return render_template('auth/home.html', funcion=takeProducts)
+    products = Product.takeProducts(db)
+    return render_template('auth/home.html', funcion= products)
 
 @app.route('/navbar', methods = ['GET', 'POST'])
 def navbar():
@@ -200,9 +156,9 @@ def seller_login():
 def my_products():
     message = request.args.get('message', None)
     if request.method == 'POST':
-        return render_template('auth/my_products.html', TakeProducts=takeProductsBySeller, message=message)
+        return render_template('auth/my_products.html', TakeProducts=Product.takeProductsBySeller, message=message, db=db)
     else:
-        return render_template('auth/my_products.html', TakeProducts=takeProductsBySeller, message= message)
+        return render_template('auth/my_products.html', TakeProducts=Product.takeProductsBySeller, message= message, db=db)
 
 @app.route('/add_new_product', methods=['GET','POST'])
 def add_new_product():
@@ -215,25 +171,33 @@ def add_new_product():
     else:
         return render_template('auth/add_new_product.html') 
 
-@app.route('/view_product/<productId>/', methods=['GET','POST'])
-def view_my_product(productId):
-    return render_template('auth/view_product.html', productId=productId, takeProductById=takeProductsById(productId), takeSellerById=takeSellerById, takeProductsWithLimit=takeProductsWithLimit) # , ,editProduct = editProduct()
+@app.route('/view_product/<productId>/<clientId>', methods=['GET','POST'])
+def view_my_product(productId, clientId):
+    if request.method == 'POST' and clientId != "Null":
+        product = Product.takeProductsById(db, productId)
+        sellerId = product[0][3]
+        productPrice = product[0][2]
+        Product.addToCart(db, productId, sellerId, clientId, productPrice)
+        flash("producto añadido correctamente")
+        return render_template('auth/view_product.html', productId=productId, takeProductById=Product.takeProductsById(db, productId), takeSellerById=Seller.takeSellerById, db=db ,takeProductsWithLimit=Product.takeProductsWithLimit(db, 10))
+    else:
+        return render_template('auth/view_product.html', productId=productId, takeProductById=Product.takeProductsById(db, productId), takeSellerById=Seller.takeSellerById, db=db,takeProductsWithLimit=Product.takeProductsWithLimit(db, 10)) # , ,editProduct = editProduct()
 
-@app.route('/edit_product/<productId>', methods = ['GET', 'POST'])
+@app.route('/edit_product/<productId>/', methods = ['GET', 'POST'])
 def edit_Product(productId):
     if request.method == 'POST':
         parameter = request.form['parameter']
         if parameter == "DELETE_PRODUCT":
+            Product.deleteProduct(db, productId)
             print("Eliminado Correctamete")
             return(redirect(url_for('my_products', message= "Producto elimiado correctamente")))
         else:
             newValue = request.form['newValue']
-            editProduct(productId, parameter, newValue)
+            Product.editProduct(db, productId, parameter, newValue)
             flash("Producto editado correctamete")
-            print("editado correctamente")
-            return render_template('auth/edit_product.html', takeProductById = takeProductsById(productId))
+            return render_template('auth/edit_product.html', takeProductById = Product.takeProductsById(db, productId))
     else: 
-        return render_template('auth/edit_product.html', takeProductById = takeProductsById(productId))
+        return render_template('auth/edit_product.html', takeProductById = Product.takeProductsById(db, productId))
 
 @app.route('/my_account', methods = ['GET', 'POST'])
 @login_required
@@ -248,15 +212,34 @@ def my_account_edit(userType, userId):
     if request.method == 'POST':
         parameter = request.form['parameter']
         if parameter == "DELETE_ACCOUNT":
-            print("Eliminado Correctamente")
-            return(redirect(url_for('register_user_select')))
+            logout_user()
+            Product.deleteAccount(db, userType, userId)
+            flash("Cuenta eliminada correctamente")
+            return(redirect(url_for('login_user_select')))
         else:
             newValue = request.form['newValue']
-            editAccount(userType, userId, parameter, newValue)
+            User.editAccount(db, userType, userId, parameter, newValue)
             flash("Cuenta editada exitosamente")
             return render_template('auth/my_account_edit.html')
     else:
         return render_template('auth/my_account_edit.html')
+
+@app.route('/view_cart/<clientId>/<productId>', methods = ['GET', 'POST'])
+def view_cart(clientId, productId):
+
+    lista = Product.takeProductsById(db, "282ee2fd-252b-43cf-9ba4-344776d768d1")
+    print(lista[0][4])
+    if request.method == 'POST':
+        action = request.form['action']
+        if action == 'deleteProduct' and productId != "Null":
+            Product.deleteProductFromCart(db, productId, clientId)
+            print("Producto eliminado correctamente")
+            return render_template('auth/my_order.html', takeOrderByClientId=Client.takeOrderByClientId,takeProductsById=Product.takeProductsById, totalPrice=getTotalPrice, db=db)
+        else: 
+            return render_template('auth/my_order.html', takeOrderByClientId=Client.takeOrderByClientId, takeProductsById=Product.takeProductsById, totalPrice=getTotalPrice, db=db)
+
+    else:
+        return render_template('auth/my_order.html', takeOrderByClientId=Client.takeOrderByClientId, takeProductsById=Product.takeProductsById, totalPrice=getTotalPrice, db=db)
 
 @app.route('/logout')
 def logout():
