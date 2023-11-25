@@ -160,7 +160,7 @@ def my_products():
     else:
         return render_template('auth/my_products.html', TakeProducts=Product.takeProductsBySeller, message= message, db=db)
 
-@app.route('/add_new_product', methods=['GET','POST'])
+@app.route('/add_new_product', methods=['GET','POST']) # Add new product to the data base by the seller
 def add_new_product():
     if request.method == 'POST':
         productId = uuid.uuid4()
@@ -190,7 +190,6 @@ def edit_Product(productId):
         if parameter == "DELETE_PRODUCT":
             Product.deleteProduct(db, productId)
             Product.deleteProductFromCartSeller(db, productId)
-            print("Eliminado Correctamete")
             return(redirect(url_for('my_products', message= "Producto elimiado correctamente")))
         else:
             newValue = request.form['newValue']
@@ -215,7 +214,8 @@ def my_account_edit(userType, userId):
         if parameter == "DELETE_ACCOUNT":
             logout_user()
             Product.deleteAccount(db, userType, userId)
-            flash("Cuenta eliminada correctamente")
+            Product.deleteProductFromCartClient(db, userId)
+            #flash("Cuenta eliminada correctamente")
             return(redirect(url_for('login_user_select')))
         else:
             newValue = request.form['newValue']
@@ -227,21 +227,27 @@ def my_account_edit(userType, userId):
 
 @app.route('/view_cart/<clientId>/<productId>', methods = ['GET', 'POST'])
 def view_cart(clientId, productId):
-
-    lista = Product.takeProductsById(db, "282ee2fd-252b-43cf-9ba4-344776d768d1")
-    print(lista[0][4])
     if request.method == 'POST':
         action = request.form['action']
         if action == 'deleteProduct' and productId != "Null":
             Product.deleteProductFromCart(db, productId, clientId)
-            print("Producto eliminado correctamente")
+            flash("Producto eliminado correctamente del carrito")
             return render_template('auth/my_order.html', takeOrderByClientId=Client.takeOrderByClientId,takeProductsById=Product.takeProductsById, totalPrice=getTotalPrice, db=db)
-        else: 
-            return render_template('auth/my_order.html', takeOrderByClientId=Client.takeOrderByClientId, takeProductsById=Product.takeProductsById, totalPrice=getTotalPrice, db=db)
-
+        elif action == 'pay': 
+            return redirect(url_for('pay_order', clientId=clientId))
     else:
         return render_template('auth/my_order.html', takeOrderByClientId=Client.takeOrderByClientId, takeProductsById=Product.takeProductsById, totalPrice=getTotalPrice, db=db)
 
+@app.route('/pay_order/<clientId>', methods = ['GET', 'POST'])
+def pay_order(clientId):
+    if request.method == 'POST':
+        Client.payOrder(db, clientId)
+        Product.deleteProductFromCartClient(db, clientId)
+        flash("Compra realizada con exito, revisa tu correo para más información")
+        return render_template('auth/pay_order.html')
+    else:
+        return render_template('auth/pay_order.html')
+    
 @app.route('/logout')
 def logout():
     logout_user()

@@ -20,6 +20,11 @@
             margin-bottom: 16px;
             align-self: center;
         }
+        .delete-message{
+            color: var(--danger-zone);
+            font-size: var(--md);
+            text-align: center;
+        }
     /* Main grid -> items grid */
         .cards-box {
             margin-top: 1em;
@@ -112,7 +117,7 @@
         <h1>Hola! {{ current_user.ceoName }}</h1>
         <h2>Aquí estan todos los productos de {{ current_user.companyName }}, haz click sobre cada uno de ellos para editarlos</h2>    
         {% if message %}
-            <h2>{{ message }}</>
+            <h2 class="delete-message">{{ message }}</>
         {% endif %}
     </header>
     <main class="cards-box">

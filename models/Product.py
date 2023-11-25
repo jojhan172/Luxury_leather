@@ -103,7 +103,14 @@ class Product():
         db.commit
         return
 
-    
+    @classmethod # Executes when an order is paid
+    def deleteProductFromCartClient(self, db, clientId):
+        cursor = db.cursor()
+        sql = "DELETE FROM cart_products WHERE `cart_products`.`clientId` = '{clientId}'".format(clientId=clientId)
+        cursor.execute(sql)
+        db.commit
+        return
+
     @classmethod
     def addToCart(self, db, productId, sellerId, clientId, productPrice)->0:
     #id, productId, sellerId, clientId, productPrice, deliveryDate

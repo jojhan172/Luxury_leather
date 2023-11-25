@@ -1,0 +1,104 @@
+{% extends './auth/base.html' %}
+    {% block title %}Luxury Payment{% endblock %}
+
+{% block customCSS %}
+<style>
+    main{
+        display: grid;
+        place-items: center;
+        height: 92vh;
+    }
+    .form-container{
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 30%;
+        height: 90%;
+        border: 1px solid var(--very-light-grey);
+        border-radius: 10px;
+        gap: 10px;
+    }
+    .form-container h1{
+        font-size: var(--lg);
+        font-weight: bold;
+        color: var(--dark-grey);
+        margin-bottom: 8%;
+    }
+
+    .form-container div{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        width: 80%;
+        gap: 5px;
+    }
+
+    .form-container__label{
+        font-size: var(--sm);
+        font-weight: bold;
+        color: var(--dark-grey);
+            }
+
+    .form-container__input-box{
+        background-color: var(--text-input-field);
+        border: none;
+        border-radius: 8px;
+        font-size: var(--md);
+        height: 40px;
+        padding: 6px;
+        margin-bottom: 20px;
+        width: 100%;
+    }
+
+    .form-container__submit{
+        background-color: var(--hospital-green);
+        border: none;
+        border-radius: 8px;
+        color: var(--white);
+        font-size: var(--md);
+        font-weight: bold;
+        height: 50px;
+        width: 100%;
+        }
+
+</style>
+{% endblock %}
+
+{% block body %}
+    {% include 'auth/navbar.html' %}
+<main>
+    
+    <form action="/pay_order/{{current_user.id}}" class="form-container" method="POST">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <br>
+                {% for message in messages %}
+                    <div class="message-box"><strong>{{ message }}<a href="/home" style="text-decoration: none; color:#ACD9B2;"> Ir al inicio</a></strong></div> 
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <h1>Add your payment method</h1>
+        <div class="">
+            <label for="cardNumber" class="form-container__label">Card Number</label>
+            <input type="text" id="cardNumber" name="cardNumber" placeholder="1234 5678 9012 3456" class="form-container__input-box" required>
+        </div>
+        <div>
+            <label for="cardHolder" class="form-container__label">Card Holder</label>
+            <input type="text" id="cardHolder" name="cardHolder" placeholder="John Doe" class="form-container__input-box" required>
+        </div>
+        <div>
+            <label for="expiryDate" class="form-container__label">Expiry Date</label>
+            <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YY" class="form-container__input-box" required>
+        </div>
+        <div>
+            <label for="cvv" class="form-container__label"> Card CVV </label>
+            <input type="text" name="cvv" id="cvv" placeholder="***" class="form-container__input-box" required>
+        </div>
+        <button type="submit" value="Pay" class="form-container__submit">Pay</button>
+    </form>
+</main>
+{% endblock %}

@@ -41,18 +41,6 @@
 
         }
 
-            .message-box{
-                text-align: center ;
-                font-size: var(--md);
-                color: rgb(255, 132, 132);
-                height: 9vh;
-                margin-bottom: 16px;
-                padding: 5px;
-                border: 1px;
-                border-color: rgb(255, 144, 144);
-                box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;    
-        }
-
         label {
             font-size: var(--md);
             font-weight: 700;
@@ -102,6 +90,14 @@
 {% block body %}
     {% include 'auth/navbar.html' %}
     <main>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <br>
+                {% for message in messages %}
+                    <div class="message-box"><strong>{{ message }}<a href="/my_products" style="text-decoration: none; color:#ACD9B2;"> Ir a mis productos</a></strong></div> 
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
         <section class="main-container">
             <h1>Añade un nuevo producto a {{current_user.companyName}}!</h1>
             <form action="/add_new_product" method="POST" class="create-product-form">

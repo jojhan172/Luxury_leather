@@ -6,7 +6,7 @@
     .main-container{
         display: grid;
         grid-template-columns: 1fr 0.8fr 1fr;
-        grid-template-rows: 0.5fr 1fr 0.5fr ;
+        grid-template-rows: 0.1fr 1fr 0.5fr ;
     }
     .box-inputs{
         grid-column: 2/3;
@@ -89,6 +89,14 @@
         {% with product = takeProductById %}
         <section class="box-inputs">
             <h1>Edita tu producto de {{current_user.companyName}}</h1>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <br>
+                    {% for message in messages %}
+                        <div class="message-box"><strong>{{ message }}<a href="/my_products" style="text-decoration: none; color:#ACD9B2;"> Ir a mis productos</a></strong></div> 
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
             <!--Name Edit-->
             <form action="/edit_product/{{product[0][0]}}" method="POST">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">

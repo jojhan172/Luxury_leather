@@ -38,7 +38,7 @@ class Client(User):
         return row
     
     @classmethod
-    def pay_order(self, clientId) -> 0:
+    def payOrder(self,db, clientId) -> 0:
         return
         
 

@@ -130,10 +130,10 @@
         <img src="../../static/luxuryLeatherLogoPack/svg/logo-no-background.svg" alt="logo" class="main-box__img">
         {% with messages = get_flashed_messages() %}
         {% if messages %}
-        <br>
-        {% for message in messages %}
-        <div class="message-box"><strong>{{ message }}</strong></div>
-        {% endfor %}
+            <br>
+            {% for message in messages %}
+            <div class="message-box"><strong>{{ message }}</strong></div>
+            {% endfor %}
         {% endif %}
         {% endwith %}
         <form action="/client_login" method="POST" class="login-form main-box__login-form">

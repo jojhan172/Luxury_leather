@@ -92,6 +92,14 @@
     {% include 'auth/navbar.html' %}
     <main class="edit-account-box">
         <section>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <br>
+                    {% for message in messages %}
+                        <div class="message-box"><strong>{{ message }}</strong></div> 
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
         <h1 class="tittle edit-account-box__tittle">Edita tu cuenta de luxury lether</h1>
         {% if current_user.userType == 'seller'%} <!--Forms for seller users-->
             <form action="/my_account_edit/{{current_user.userType}}/{{current_user.id}}" method="POST" class="form-container">

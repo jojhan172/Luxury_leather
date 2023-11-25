@@ -183,6 +183,14 @@
             <a href="/edit_product/{{product[0][0]}}" >edit product</a>
         </div>
         {% elif (current_user.userType == 'client' ) %}
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <br>
+                {% for message in messages %}
+                    <div class="message-box"><strong>{{ message }}<a href="/view_cart/{{current_user.id}}/Null" style="text-decoration: none; color:#ACD9B2;"> Ir a mi carrito</a></strong></div> 
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
         <form action="/view_product/{{product[0][0]}}/{{current_user.id}}" class="" method="POST">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <input type="hidden" name="addToCart" value="addToCart">
